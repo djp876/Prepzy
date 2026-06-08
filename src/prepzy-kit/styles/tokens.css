@@ -1,0 +1,43 @@
+:root {
+  /* Brand colors */
+  --pz-cream: #fff8ed;
+  --pz-cream-soft: #f4f3ff;
+  --pz-purple: #3d348b;
+  --pz-purple-soft: #c4beff;
+  --pz-amber: #ffb84d;
+  --pz-amber-deep: #f59e0b;
+  --pz-ink: #1a1a2e;
+  --pz-muted: #6b6b80;
+  --pz-white: #ffffff;
+  --pz-border: #e6e1d6;
+
+  /* Radii */
+  --pz-radius-sm: 8px;
+  --pz-radius-md: 14px;
+  --pz-radius-lg: 24px;
+  --pz-radius-pill: 999px;
+
+  /* Spacing scale */
+  --pz-space-1: 4px;
+  --pz-space-2: 8px;
+  --pz-space-3: 12px;
+  --pz-space-4: 16px;
+  --pz-space-5: 24px;
+  --pz-space-6: 32px;
+  --pz-space-8: 48px;
+
+  /* Shadows */
+  --pz-shadow-sm: 0 2px 6px rgba(61, 52, 139, 0.08);
+  --pz-shadow-md: 0 8px 20px rgba(61, 52, 139, 0.12);
+  --pz-shadow-lg: 0 14px 32px rgba(0, 0, 0, 0.18);
+
+  /* Typography — --font-poppins is injected by next/font in layout.tsx */
+  --pz-font: var(--font-poppins), "Poppins", system-ui, sans-serif;
+  --pz-text-xs: 12px;
+  --pz-text-sm: 14px;
+  --pz-text-base: 16px;
+  --pz-text-lg: 20px;
+  --pz-text-xl: 28px;
+  --pz-text-2xl: 40px;
+  --pz-text-3xl: 56px;
+}
