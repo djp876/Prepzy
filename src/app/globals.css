@@ -53,18 +53,61 @@ html.lenis body {
   }
 }
 
-/* Hero media play button pulse + compass hover */
+/* === Hero interactions: one easing curve (--pz-ease-out) + short durations === */
+/* Play button: focal CTA in the media tile. Pulse is a box-shadow ring so a
+   hover scale on the same element never fights the animation transform. */
 @keyframes pzPlayPulse {
-  0%,
-  100% {
-    transform: translate(-50%, -50%) scale(1);
+  0% {
+    box-shadow: 0 10px 26px -8px rgba(217, 119, 6, 0.55),
+      0 0 0 0 rgba(255, 184, 77, 0.5);
   }
-  50% {
-    transform: translate(-50%, -50%) scale(1.07);
+  70% {
+    box-shadow: 0 10px 26px -8px rgba(217, 119, 6, 0.55),
+      0 0 0 16px rgba(255, 184, 77, 0);
+  }
+  100% {
+    box-shadow: 0 10px 26px -8px rgba(217, 119, 6, 0.55),
+      0 0 0 0 rgba(255, 184, 77, 0);
   }
 }
+.pz-play-pos {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 .pz-play {
-  animation: pzPlayPulse 2.6s ease-in-out infinite;
+  animation: pzPlayPulse 2.8s var(--pz-ease-out) infinite;
+  transition: transform var(--pz-dur) var(--pz-ease-out);
+}
+.pz-area-media:hover .pz-play {
+  transform: scale(1.09);
+}
+
+/* Media tile: gentle lift on hover */
+.pz-area-media {
+  transition: transform var(--pz-dur-slow) var(--pz-ease-out),
+    box-shadow var(--pz-dur-slow) var(--pz-ease-out);
+}
+.pz-area-media:hover {
+  transform: translateY(-3px);
+}
+
+/* Primary CTA: lift on hover, press on active */
+.pz-cta {
+  transition: transform var(--pz-dur-fast) var(--pz-ease-out),
+    box-shadow var(--pz-dur) var(--pz-ease-out),
+    background var(--pz-dur-fast) var(--pz-ease-out);
+}
+.pz-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 28px -14px rgba(0, 0, 0, 0.45);
+}
+.pz-cta:active {
+  transform: translateY(0) scale(0.98);
+}
+.pz-compass {
+  transition: transform var(--pz-dur-slow) var(--pz-ease-out);
 }
 .pz-compass:hover {
   transform: rotate(70deg);
