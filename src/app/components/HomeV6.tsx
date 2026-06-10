@@ -16,7 +16,7 @@ const MUTED = "#6b6b80";
 const GREEN = "#1d9e75";
 
 // Real hosted demo video (placeholder — swap with a real Prepzy screen-recording)
-const VIDEO = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4";
+const VIDEO = "https://media.w3.org/2010/05/sintel/trailer.mp4";
 
 // Real photos from Unsplash (verified URLs)
 function ph(base: string, w: number, h?: number, faces?: boolean): string {
