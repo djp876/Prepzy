@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Play, Star, Check, Send, Menu, Sparkles } from "lucide-react";
+import { ArrowUpRight, Play, Star, Menu } from "lucide-react";
 
 const PURPLE = "#3d348b";
-const PURPLE_DEEP = "#241d52";
 const AMBER = "#ffb84d";
 const LAV = "#ece9fb";
 const INK = "#1a1a2e";
@@ -13,8 +12,9 @@ const GREEN = "#1d9e75";
 
 const ROT_WORDS = ["Personalized", "Smart", "Daily", "Trusted", "Interactive"];
 
-function ph(base: string, w: number, h: number): string {
-  return `${base}?auto=format&fit=crop&q=80&w=${w}&h=${h}&crop=faces`;
+const HERO_PHOTO = "https://images.unsplash.com/photo-1571260899304-425eee4c7efc";
+function ph(base: string, w: number, h: number, faces?: boolean): string {
+  return `${base}?auto=format&fit=crop&q=80&w=${w}&h=${h}${faces ? "&crop=faces" : ""}`;
 }
 const FACES = [
   "https://images.unsplash.com/photo-1633700199686-bd546d6abb65",
@@ -106,129 +106,41 @@ function Nav() {
   );
 }
 
-interface Msg {
-  role: "atlas" | "user" | "step";
-  text: string;
-}
-
-const SAMPLES: ReadonlyArray<{ q: string; steps: string[] }> = [
-  { q: "Solve 2x + 5 = 15", steps: ["Subtract 5 from both sides → 2x = 10", "Divide both sides by 2 → x = 5", "Answer: x = 5"] },
-  { q: "What is photosynthesis?", steps: ["Plants turn sunlight, water and CO₂ into food.", "It happens in the chloroplasts, the green parts of a leaf.", "Output: glucose for energy, plus oxygen."] },
-  { q: "Explain Newton's second law", steps: ["Force = mass × acceleration (F = ma).", "More force on an object means more acceleration.", "More mass means less acceleration for the same force."] },
-];
-
-function AskAtlas() {
-  const reduce = usePrefersReducedMotion();
-  const [msgs, setMsgs] = useState<Msg[]>([{ role: "atlas", text: "Hi, I'm Atlas. Ask me any doubt and I'll explain it step by step." }]);
-  const [typing, setTyping] = useState(false);
-  const [val, setVal] = useState("");
-  const timers = useRef<number[]>([]);
-  const scroller = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    scroller.current?.scrollTo({ top: scroller.current.scrollHeight, behavior: "smooth" });
-  }, [msgs, typing]);
-
-  useEffect(() => () => timers.current.forEach((t) => window.clearTimeout(t)), []);
-
-  const ask = (q: string, steps: string[]) => {
-    timers.current.forEach((t) => window.clearTimeout(t));
-    timers.current = [];
-    setMsgs((m) => [...m, { role: "user", text: q }]);
-    setTyping(true);
-    const stepDelay = reduce ? 0 : 480;
-    steps.forEach((s, i) => {
-      const t = window.setTimeout(() => {
-        setMsgs((m) => [...m, { role: "step", text: s }]);
-        if (i === steps.length - 1) setTyping(false);
-      }, stepDelay * (i + 1) + 300);
-      timers.current.push(t);
-    });
-  };
-
-  const submit = () => {
-    const q = val.trim();
-    if (!q) return;
-    setVal("");
-    ask(q, ["Note what's given and what's being asked.", "Pick the concept or formula that fits.", "Work through it step by step, then check the answer."]);
-  };
-
+function HeroVisual({ reduce }: { reduce: boolean }) {
   return (
-    <div style={{ background: "rgba(255,255,255,0.82)", backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.9)", borderRadius: 24, boxShadow: "0 40px 80px -36px rgba(36,29,82,0.45)", overflow: "hidden" }}>
-      {/* header */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 16px", borderBottom: "1px solid var(--pz-line)" }}>
-        <span style={{ position: "relative", width: 34, height: 34, borderRadius: "50%", background: `linear-gradient(135deg, ${PURPLE}, ${PURPLE_DEEP})`, color: "#fff", fontSize: 15, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          A
-          <span style={{ position: "absolute", right: -1, bottom: -1, width: 11, height: 11, borderRadius: "50%", background: GREEN, border: "2px solid #fff" }} />
-        </span>
-        <span>
-          <span style={{ display: "block", fontSize: 14, fontWeight: 700, color: INK, lineHeight: 1.1 }}>Atlas</span>
-          <span style={{ display: "block", fontSize: 11.5, color: GREEN, fontWeight: 600 }}>Online · answers in seconds</span>
-        </span>
-        <span style={{ marginLeft: "auto", display: "inline-flex", alignItems: "center", gap: 5, fontSize: 11, fontWeight: 700, color: PURPLE, background: LAV, borderRadius: "var(--pz-radius-pill)", padding: "4px 10px" }}>
-          <Sparkles size={12} /> Live demo
-        </span>
+    <div style={{ position: "relative" }}>
+      <div className={reduce ? "" : "pz-tilt"} style={{ position: "relative", borderRadius: 28, overflow: "hidden", border: "6px solid #fff", boxShadow: "0 44px 90px -38px rgba(36,29,82,0.55)", aspectRatio: "4 / 5" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={ph(HERO_PHOTO, 760, 950)} alt="Student learning with Prepzy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
       </div>
 
-      {/* messages */}
-      <div ref={scroller} style={{ height: 248, overflowY: "auto", padding: "16px", display: "flex", flexDirection: "column", gap: 10 }}>
-        {msgs.map((m, i) => {
-          if (m.role === "user") {
-            return (
-              <div key={i} style={{ alignSelf: "flex-end", maxWidth: "82%", background: PURPLE, color: "#fff", borderRadius: 14, borderBottomRightRadius: 4, padding: "9px 13px", fontSize: 13.5, fontWeight: 500 }}>{m.text}</div>
-            );
-          }
-          if (m.role === "step") {
-            return (
-              <div key={i} className="pz-pop" style={{ alignSelf: "flex-start", maxWidth: "88%", display: "flex", gap: 9, alignItems: "flex-start", background: "#fff", border: "1px solid var(--pz-line)", borderRadius: 14, borderBottomLeftRadius: 4, padding: "9px 12px" }}>
-                <span style={{ width: 18, height: 18, borderRadius: "50%", background: "#e7f6ef", color: GREEN, display: "flex", alignItems: "center", justifyContent: "center", flex: "none", marginTop: 1 }}><Check size={12} strokeWidth={3} /></span>
-                <span style={{ fontSize: 13.5, color: INK, lineHeight: 1.5 }}>{m.text}</span>
-              </div>
-            );
-          }
-          return (
-            <div key={i} style={{ alignSelf: "flex-start", maxWidth: "88%", background: LAV, color: INK, borderRadius: 14, borderBottomLeftRadius: 4, padding: "9px 13px", fontSize: 13.5, lineHeight: 1.5 }}>{m.text}</div>
-          );
-        })}
-        {typing && (
-          <div style={{ alignSelf: "flex-start", display: "inline-flex", gap: 4, background: "#fff", border: "1px solid var(--pz-line)", borderRadius: 14, padding: "11px 14px" }}>
-            <span className="pz-dot" style={{ animationDelay: "0s" }} />
-            <span className="pz-dot" style={{ animationDelay: "0.15s" }} />
-            <span className="pz-dot" style={{ animationDelay: "0.3s" }} />
-          </div>
-        )}
+      {/* floating progress card */}
+      <div className={reduce ? "" : "pz-float"} style={{ position: "absolute", top: 22, left: -20, background: "#fff", borderRadius: 16, padding: "12px 14px", width: 188, boxShadow: "0 24px 46px -22px rgba(36,29,82,0.5)" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+          <span style={{ fontSize: 12.5, fontWeight: 700, color: INK }}>Class 10 · Maths</span>
+          <span style={{ fontSize: 11.5, fontWeight: 700, color: GREEN }}>68%</span>
+        </div>
+        <span style={{ display: "block", height: 7, borderRadius: 7, background: LAV, overflow: "hidden" }}>
+          <span style={{ display: "block", height: "100%", width: "68%", borderRadius: 7, background: PURPLE }} />
+        </span>
+        <span style={{ display: "block", fontSize: 11, color: MUTED, marginTop: 7 }}>Trigonometry · 17 of 25 chapters</span>
       </div>
 
-      {/* chips */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 7, padding: "0 16px 12px" }}>
-        {SAMPLES.map((s) => (
-          <button key={s.q} onClick={() => ask(s.q, s.steps)} className="pz-chip" style={{ border: "1px solid #e7dfcd", background: "#fff", color: INK, borderRadius: "var(--pz-radius-pill)", padding: "7px 12px", fontSize: 12.5, fontWeight: 600, cursor: "pointer" }}>{s.q}</button>
-        ))}
-      </div>
-
-      {/* input */}
-      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "12px 14px", borderTop: "1px solid var(--pz-line)" }}>
-        <input
-          value={val}
-          onChange={(e) => setVal(e.target.value)}
-          onKeyDown={(e) => { if (e.key === "Enter") submit(); }}
-          placeholder="Type any doubt…"
-          aria-label="Type any doubt"
-          style={{ flex: 1, border: "1px solid var(--pz-line)", borderRadius: "var(--pz-radius-pill)", padding: "10px 14px", fontSize: 14, color: INK, background: "#fff", outline: "none" }}
-        />
-        <button onClick={submit} aria-label="Send" className="pz-cta" style={{ width: 42, height: 42, flex: "none", borderRadius: "50%", background: PURPLE, color: "#fff", border: "none", display: "inline-flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
-          <Send size={17} />
-        </button>
+      {/* floating score chip */}
+      <div className={reduce ? "" : "pz-float-2"} style={{ position: "absolute", bottom: 26, right: -16, background: AMBER, borderRadius: 16, padding: "12px 16px", boxShadow: "0 24px 46px -20px rgba(255,184,77,0.9)" }}>
+        <span style={{ display: "block", fontSize: 23, fontWeight: 800, color: INK, lineHeight: 1 }}>+18%</span>
+        <span style={{ display: "block", fontSize: 11.5, fontWeight: 600, color: "#6b4a12", marginTop: 2 }}>avg. score lift</span>
       </div>
     </div>
   );
 }
 
 export function HeroV7() {
+  const reduce = usePrefersReducedMotion();
   return (
     <div style={{ background: "var(--pz-cream)" }}>
       <Nav />
-      <section className="pz-v5-hero" style={{ position: "relative", overflow: "hidden", padding: "clamp(28px, 4vw, 56px) 16px clamp(52px, 7vw, 96px)" }}>
+      <section className="pz-v5-hero" style={{ position: "relative", overflow: "hidden", padding: "clamp(28px, 4vw, 56px) 16px clamp(56px, 8vw, 100px)" }}>
         <AuroraBg />
         <div className="pz-v5-grid" style={{ position: "relative", zIndex: 2 }}>
           {/* left */}
@@ -243,7 +155,7 @@ export function HeroV7() {
               Learning Companion.
             </h1>
             <p className="pz-pop" style={{ fontSize: "clamp(15px, 1.6vw, 18px)", color: MUTED, lineHeight: 1.55, margin: "18px 0 0", maxWidth: 460 }}>
-              Ask any doubt and get a clear, step-by-step answer — any subject, any time. Built for CBSE 6-12 and NEET-UG.
+              Video lessons, 24×7 doubt-solving and practice that actually sticks. Built for CBSE 6-12 and NEET-UG.
             </p>
             <div className="pz-pop flex items-center" style={{ gap: 14, marginTop: 28, flexWrap: "wrap" }}>
               <a href="#" className="pz-cta" style={{ display: "inline-flex", alignItems: "center", gap: 10, background: PURPLE, color: "#fff", borderRadius: "var(--pz-radius-pill)", padding: "14px 14px 14px 26px", fontWeight: 700, fontSize: 16, textDecoration: "none", boxShadow: "0 18px 32px -14px rgba(61,52,139,0.7)" }}>
@@ -258,15 +170,15 @@ export function HeroV7() {
             <div className="pz-pop" style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 26, flexWrap: "wrap" }}>
               <span className="pz-avatars">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                {FACES.map((f) => <img key={f} src={ph(f, 80, 80)} alt="Prepzy learner" />)}
+                {FACES.map((f) => <img key={f} src={ph(f, 80, 80, true)} alt="Prepzy learner" />)}
               </span>
               <span style={{ fontSize: 13.5, color: MUTED }}>Joined by students across <strong style={{ color: INK }}>India</strong></span>
             </div>
           </div>
 
-          {/* right: interactive Ask Atlas demo */}
+          {/* right: real photo + floating proof cards */}
           <div className="pz-pop">
-            <AskAtlas />
+            <HeroVisual reduce={reduce} />
           </div>
         </div>
       </section>
