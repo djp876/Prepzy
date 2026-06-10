@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Compass, Play, Info } from "lucide-react";
-import { Reveal } from "./Reveal";
 
 const PURPLE = "#3d348b";
 const PURPLE_DEEP = "#241d52";
@@ -111,97 +110,95 @@ export function HeroV1() {
     <section style={{ background: CREAM, padding: "20px 16px 40px" }}>
       <div className="pz-herogrid mx-auto" style={{ maxWidth: 1200 }}>
         {/* PURPLE INTRO BOX */}
-        <Reveal className="pz-area-box" delay={0} y={20}>
-          <div
-            style={{
-              background: PURPLE,
-              borderRadius: "var(--pz-radius-tile)",
-              padding: "clamp(24px, 3vw, 32px)",
-              color: "#fff",
-              boxShadow: "0 30px 60px -30px rgba(36,29,82,0.55)",
-              overflow: "hidden",
-            }}
-          >
-            <div className="flex items-start justify-between" style={{ gap: 10 }}>
-              <span style={{ fontSize: 12.5, fontWeight: 700, opacity: 0.92, maxWidth: 240 }}>
-                Watch Less. Practice More. Score Higher.
-              </span>
-              <Solar reduce={reduce} />
-            </div>
-
-            <h1 style={{ fontSize: "clamp(28px, 3.6vw, 40px)", fontWeight: 800, lineHeight: 1.12, letterSpacing: "-0.02em", margin: "16px 0 0" }}>
-              Your <span style={{ color: AMBER }}>Personalized</span> Learning Companion.
-            </h1>
-
-            <p style={{ color: "rgba(255,255,255,0.82)", fontSize: 14.5, lineHeight: 1.6, margin: "14px 0 0", maxWidth: 430 }}>
-              Guiding every step of your learning journey with personalized support, focused practice, and the confidence to achieve your goals.
-            </p>
-
-            <div className="flex items-center" style={{ gap: 12, marginTop: 24 }}>
-              <a href="#" style={{ background: "#fff", color: INK, borderRadius: "var(--pz-radius-pill)", padding: "13px 22px", fontWeight: 600, fontSize: 14.5, textDecoration: "none", boxShadow: "0 8px 18px -10px rgba(0,0,0,0.35)" }}>
-                Experience Prepzy now
-              </a>
-              <a href="#" aria-label="Take the guided tour" className="pz-compass" style={{ width: 46, height: 46, borderRadius: "var(--pz-radius-pill)", background: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", color: PURPLE, boxShadow: "0 8px 18px -10px rgba(0,0,0,0.35)", transition: "transform 0.6s cubic-bezier(.16,1,.3,1)" }}>
-                <Compass size={20} />
-              </a>
-            </div>
+        <div
+          className="pz-area-box pz-rise"
+          style={{
+            animationDelay: "0s",
+            background: PURPLE,
+            borderRadius: "var(--pz-radius-tile)",
+            padding: "clamp(24px, 3vw, 32px)",
+            color: "#fff",
+            boxShadow: "0 30px 60px -30px rgba(36,29,82,0.55)",
+            overflow: "hidden",
+          }}
+        >
+          <div className="flex items-start justify-between" style={{ gap: 10 }}>
+            <span style={{ fontSize: 12.5, fontWeight: 700, opacity: 0.92, maxWidth: 240 }}>
+              Watch Less. Practice More. Score Higher.
+            </span>
+            <Solar reduce={reduce} />
           </div>
-        </Reveal>
+
+          <h1 style={{ fontSize: "clamp(28px, 3.6vw, 40px)", fontWeight: 800, lineHeight: 1.12, letterSpacing: "-0.02em", margin: "16px 0 0" }}>
+            Your <span style={{ color: AMBER }}>Personalized</span> Learning Companion.
+          </h1>
+
+          <p style={{ color: "rgba(255,255,255,0.82)", fontSize: 14.5, lineHeight: 1.6, margin: "14px 0 0", maxWidth: 430 }}>
+            Guiding every step of your learning journey with personalized support, focused practice, and the confidence to achieve your goals.
+          </p>
+
+          <div className="flex items-center" style={{ gap: 12, marginTop: 24 }}>
+            <a href="#" style={{ background: "#fff", color: INK, borderRadius: "var(--pz-radius-pill)", padding: "13px 22px", fontWeight: 600, fontSize: 14.5, textDecoration: "none", boxShadow: "0 8px 18px -10px rgba(0,0,0,0.35)" }}>
+              Experience Prepzy now
+            </a>
+            <a href="#" aria-label="Take the guided tour" className="pz-compass" style={{ width: 46, height: 46, borderRadius: "var(--pz-radius-pill)", background: "#fff", display: "inline-flex", alignItems: "center", justifyContent: "center", color: PURPLE, boxShadow: "0 8px 18px -10px rgba(0,0,0,0.35)", transition: "transform 0.6s cubic-bezier(.16,1,.3,1)" }}>
+              <Compass size={20} />
+            </a>
+          </div>
+        </div>
 
         {/* MEDIA TILE */}
-        <Reveal className="pz-area-media" delay={0.12} y={20}>
-          <div
-            style={{
-              background: PURPLE_DEEP,
-              borderRadius: "var(--pz-radius-tile)",
-              position: "relative",
-              overflow: "hidden",
-              minHeight: 300,
-              height: "100%",
-              boxShadow: "0 30px 60px -30px rgba(36,29,82,0.55)",
-            }}
-          >
-            <div style={{ position: "absolute", inset: "22px 22px 64px", background: "#fbf7ef", borderRadius: 12, padding: 10, display: "flex", gap: 7 }}>
-              <div style={{ width: "30%", background: "#efedfb", borderRadius: 7, display: "flex", flexDirection: "column", gap: 5, padding: 7 }}>
-                {[70, 90, 55, 80].map((w, i) => (
-                  <span key={i} style={{ height: 7, borderRadius: 3, background: "#d7d2ef", width: `${w}%` }} />
-                ))}
-              </div>
-              <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 6 }}>
-                <span style={{ height: 9, borderRadius: 4, background: "#ffe2b0", width: "60%" }} />
-                <span style={{ height: 9, borderRadius: 4, background: "#e7e3f4", width: "85%" }} />
-                <span style={{ flex: 1, background: "#efedfb", borderRadius: 8 }} />
-              </div>
+        <div
+          className="pz-area-media pz-rise"
+          style={{
+            animationDelay: "0.12s",
+            background: PURPLE_DEEP,
+            borderRadius: "var(--pz-radius-tile)",
+            position: "relative",
+            overflow: "hidden",
+            minHeight: 300,
+            height: "100%",
+            boxShadow: "0 30px 60px -30px rgba(36,29,82,0.55)",
+          }}
+        >
+          <div style={{ position: "absolute", inset: "22px 22px 64px", background: "#fbf7ef", borderRadius: 12, padding: 10, display: "flex", gap: 7 }}>
+            <div style={{ width: "30%", background: "#efedfb", borderRadius: 7, display: "flex", flexDirection: "column", gap: 5, padding: 7 }}>
+              {[70, 90, 55, 80].map((w, i) => (
+                <span key={i} style={{ height: 7, borderRadius: 3, background: "#d7d2ef", width: `${w}%` }} />
+              ))}
             </div>
-
-            <a
-              href="#"
-              aria-label="Watch course overview"
-              className="pz-play"
-              style={{ position: "absolute", top: "42%", left: "50%", transform: "translate(-50%, -50%)", width: 60, height: 60, borderRadius: "var(--pz-radius-pill)", background: AMBER, display: "flex", alignItems: "center", justifyContent: "center", color: INK, boxShadow: "0 10px 26px -8px rgba(217,119,6,0.6)" }}
-            >
-              <Play size={22} fill={INK} />
-            </a>
-
-            <span style={{ position: "absolute", left: 18, bottom: 16, display: "inline-flex", alignItems: "center", gap: 6, background: "rgba(255,255,255,0.14)", border: "1px solid rgba(255,255,255,0.25)", color: "#fff", borderRadius: "var(--pz-radius-pill)", padding: "6px 13px", fontSize: 11.5, fontWeight: 500 }}>
-              <Info size={13} /> Watch course overview
-            </span>
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 6 }}>
+              <span style={{ height: 9, borderRadius: 4, background: "#ffe2b0", width: "60%" }} />
+              <span style={{ height: 9, borderRadius: 4, background: "#e7e3f4", width: "85%" }} />
+              <span style={{ flex: 1, background: "#efedfb", borderRadius: 8 }} />
+            </div>
           </div>
-        </Reveal>
+
+          <a
+            href="#"
+            aria-label="Watch course overview"
+            className="pz-play"
+            style={{ position: "absolute", top: "42%", left: "50%", transform: "translate(-50%, -50%)", width: 60, height: 60, borderRadius: "var(--pz-radius-pill)", background: AMBER, display: "flex", alignItems: "center", justifyContent: "center", color: INK, boxShadow: "0 10px 26px -8px rgba(217,119,6,0.6)" }}
+          >
+            <Play size={22} fill={INK} />
+          </a>
+
+          <span style={{ position: "absolute", left: 18, bottom: 16, display: "inline-flex", alignItems: "center", gap: 6, background: "rgba(255,255,255,0.14)", border: "1px solid rgba(255,255,255,0.25)", color: "#fff", borderRadius: "var(--pz-radius-pill)", padding: "6px 13px", fontSize: 11.5, fontWeight: 500 }}>
+            <Info size={13} /> Watch course overview
+          </span>
+        </div>
 
         {/* STAT BENTO */}
-        <Reveal className="pz-area-stats" delay={0.22} y={20}>
-          <div style={{ background: LAV2, borderRadius: "var(--pz-radius-tile)", padding: "18px 14px", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
-            {STATS.map((s) => (
-              <div key={s.label} style={{ textAlign: "center" }}>
-                <div style={{ fontSize: "clamp(18px, 2.4vw, 23px)", fontWeight: 800, color: PURPLE }}>
-                  <CountUp to={s.to} suffix={s.suffix} reduce={reduce} />
-                </div>
-                <div style={{ fontSize: 11.5, color: "var(--pz-muted)", marginTop: 2 }}>{s.label}</div>
+        <div className="pz-area-stats pz-rise" style={{ animationDelay: "0.22s", background: LAV2, borderRadius: "var(--pz-radius-tile)", padding: "18px 14px", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 8 }}>
+          {STATS.map((s) => (
+            <div key={s.label} style={{ textAlign: "center" }}>
+              <div style={{ fontSize: "clamp(18px, 2.4vw, 23px)", fontWeight: 800, color: PURPLE }}>
+                <CountUp to={s.to} suffix={s.suffix} reduce={reduce} />
               </div>
-            ))}
-          </div>
-        </Reveal>
+              <div style={{ fontSize: 11.5, color: "var(--pz-muted)", marginTop: 2 }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
