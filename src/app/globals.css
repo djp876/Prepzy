@@ -279,6 +279,51 @@ html.lenis body {
   transform: translate(2px, -1px);
 }
 
+/* === HeroV4: scroll-expand video → course selector === */
+.pz-v4-track {
+  position: relative;
+}
+@media (min-width: 901px) {
+  .pz-v4-track {
+    height: 300vh;
+  }
+}
+@media (max-width: 900px) {
+  .pz-v4-track {
+    height: 240vh;
+  }
+}
+.pz-v4-sticky {
+  position: sticky;
+  top: 0;
+  min-height: 100dvh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(125% 95% at 50% 0%, #463a9e 0%, #362c80 46%, #271e5e 100%);
+}
+.pz-v4-video {
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 50px 120px -50px rgba(8, 4, 32, 0.9);
+  will-change: transform;
+}
+.pz-seg {
+  transition: background var(--pz-dur-fast) var(--pz-ease-out),
+    color var(--pz-dur-fast) var(--pz-ease-out),
+    box-shadow var(--pz-dur) var(--pz-ease-out);
+}
+.pz-chip {
+  transition: background var(--pz-dur-fast) var(--pz-ease-out),
+    color var(--pz-dur-fast) var(--pz-ease-out),
+    border-color var(--pz-dur-fast) var(--pz-ease-out),
+    transform var(--pz-dur-fast) var(--pz-ease-out);
+}
+.pz-chip:hover {
+  transform: translateY(-1px);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
