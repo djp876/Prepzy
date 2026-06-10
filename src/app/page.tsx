@@ -1,5 +1,5 @@
 import { NavbarV1 } from "./components/NavbarV1";
-import { HeroV2 } from "./components/HeroV2";
+import { HeroV3 } from "./components/HeroV3";
 import { ExamPick } from "./components/ExamPick";
 import { About } from "./components/About";
 import { ExperiencePrepzy } from "./components/ExperiencePrepzy";
@@ -9,7 +9,7 @@ export default function Home() {
     <>
       <NavbarV1 />
       <main>
-        <HeroV2 />
+        <HeroV3 />
         <div className="relative" style={{ zIndex: 2 }}>
           <ExamPick />
           <ExperiencePrepzy />

@@ -206,6 +206,79 @@ html.lenis body {
   animation: pzFadeIn var(--pz-dur-slow) var(--pz-ease-out) both;
 }
 
+/* === HeroV3: deep-purple cinematic hero with scroll-driven phone video === */
+.pz-herov3-track {
+  position: relative;
+}
+@media (min-width: 901px) {
+  .pz-herov3-track {
+    height: 168vh;
+  }
+}
+.pz-herov3-sticky {
+  position: sticky;
+  top: 0;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: clamp(96px, 15vh, 156px) 0 clamp(44px, 8vh, 96px);
+  background: radial-gradient(125% 95% at 50% 0%, #463a9e 0%, #362c80 46%, #271e5e 100%);
+}
+.pz-dotgrid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1px, transparent 1.5px);
+  background-size: 24px 24px;
+  -webkit-mask-image: radial-gradient(ellipse 85% 72% at 50% 38%, #000 52%, transparent 100%);
+  mask-image: radial-gradient(ellipse 85% 72% at 50% 38%, #000 52%, transparent 100%);
+  pointer-events: none;
+}
+.pz-glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(8px);
+}
+.pz-glasspill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #fff;
+  border-radius: var(--pz-radius-pill);
+  padding: 8px 15px;
+  font-size: 13px;
+  font-weight: 600;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.pz-floatcard {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  border-radius: 16px;
+  padding: 10px 14px;
+  white-space: nowrap;
+  box-shadow: 0 22px 48px -22px rgba(15, 10, 45, 0.6);
+}
+@media (max-width: 768px) {
+  .pz-floatcard {
+    display: none;
+  }
+}
+.pz-cta-ico {
+  transition: transform var(--pz-dur) var(--pz-ease-out);
+}
+.pz-cta:hover .pz-cta-ico {
+  transform: translate(2px, -1px);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
