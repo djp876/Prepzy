@@ -72,11 +72,8 @@ export function NavbarV1() {
           </a>
           <button
             aria-label="Open menu"
-            className="lg:hidden"
+            className="inline-flex items-center justify-center lg:hidden"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
               width: 42,
               height: 42,
               borderRadius: "var(--pz-radius-pill)",
