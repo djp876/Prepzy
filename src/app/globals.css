@@ -6,11 +6,51 @@ html {
 
 body {
   margin: 0;
-  background-color: #ffffff;
+  background-color: var(--pz-cream);
   color: var(--pz-ink);
   font-family: var(--pz-font);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Lenis smooth scroll */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* V1 hero bento grid */
+.pz-herogrid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: 1.55fr 1fr;
+  grid-template-areas:
+    "box media"
+    "stats media";
+}
+.pz-area-box {
+  grid-area: box;
+}
+.pz-area-stats {
+  grid-area: stats;
+}
+.pz-area-media {
+  grid-area: media;
+}
+@media (max-width: 900px) {
+  .pz-herogrid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "box"
+      "media"
+      "stats";
+  }
 }
 
 /* Hero flip-word entrance */

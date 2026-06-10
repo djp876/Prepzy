@@ -40,4 +40,21 @@
   --pz-text-xl: 28px;
   --pz-text-2xl: 40px;
   --pz-text-3xl: 56px;
+
+  /* Extended brand tokens (Style Guide v1) */
+  --pz-purple-deep: #241d52;
+  --pz-lavender: #ece9fb;
+  --pz-lavender-2: #dcd8f6;
+  --pz-amber-ink: #d97706;
+  --pz-green: #1d9e75;
+  --pz-red: #e26d6d;
+  --pz-line: #efe7d5;
+  --pz-radius-tile: 22px;
+
+  /* Motion */
+  --pz-dur-fast: 150ms;
+  --pz-dur: 250ms;
+  --pz-dur-slow: 420ms;
+  --pz-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --pz-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
 }
