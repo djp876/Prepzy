@@ -90,46 +90,31 @@ function Nav() {
   );
 }
 
-/* ---------------- Interactive background (cursor spotlight + dot grid) ---------------- */
+/* ---------------- Aurora mesh + grain background ---------------- */
 function InteractiveBg() {
-  const reduce = usePrefersReducedMotion();
-  const ref = useRef<HTMLDivElement>(null);
-  const glow = useRef<HTMLSpanElement>(null);
-  useEffect(() => {
-    if (reduce) return;
-    const el = ref.current;
-    const g = glow.current;
-    if (!el || !g) return;
-    let raf = 0;
-    let tx = el.clientWidth / 2;
-    let ty = el.clientHeight * 0.4;
-    let cx = tx;
-    let cy = ty;
-    const onMove = (e: MouseEvent) => {
-      const r = el.getBoundingClientRect();
-      tx = e.clientX - r.left;
-      ty = e.clientY - r.top;
-    };
-    const tick = () => {
-      cx += (tx - cx) * 0.08;
-      cy += (ty - cy) * 0.08;
-      g.style.transform = `translate(${cx}px, ${cy}px)`;
-      raf = requestAnimationFrame(tick);
-    };
-    window.addEventListener("mousemove", onMove);
-    raf = requestAnimationFrame(tick);
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      cancelAnimationFrame(raf);
-    };
-  }, [reduce]);
-
   return (
-    <div ref={ref} aria-hidden style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
-      <span style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(61,52,139,0.10) 1px, transparent 1.5px)", backgroundSize: "30px 30px", WebkitMaskImage: "radial-gradient(ellipse 82% 72% at 50% 40%, #000 52%, transparent 100%)", maskImage: "radial-gradient(ellipse 82% 72% at 50% 40%, #000 52%, transparent 100%)" }} />
-      {!reduce && (
-        <span ref={glow} style={{ position: "absolute", top: 0, left: 0, width: 560, height: 560, marginLeft: -280, marginTop: -280, borderRadius: "50%", background: "radial-gradient(circle, rgba(255,184,77,0.22), rgba(124,107,224,0.12) 45%, transparent 70%)", filter: "blur(24px)", willChange: "transform" }} />
-      )}
+    <div aria-hidden style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
+      <div
+        className="pz-aurora"
+        style={{
+          position: "absolute",
+          inset: "-25%",
+          background:
+            "radial-gradient(38% 48% at 22% 22%, rgba(124,107,224,0.34), transparent 70%), radial-gradient(42% 52% at 82% 24%, rgba(255,184,77,0.36), transparent 70%), radial-gradient(48% 58% at 76% 82%, rgba(214,109,109,0.24), transparent 70%), radial-gradient(46% 56% at 16% 82%, rgba(120,200,170,0.26), transparent 72%)",
+          filter: "blur(48px)",
+        }}
+      />
+      <div
+        style={{
+          position: "absolute",
+          inset: 0,
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
+          backgroundSize: "160px 160px",
+          opacity: 0.05,
+          mixBlendMode: "multiply",
+        }}
+      />
     </div>
   );
 }

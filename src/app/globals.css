@@ -333,6 +333,11 @@ html.lenis body {
 .pz-float-2 { animation: pzFloat 7s ease-in-out infinite; }
 .pz-float-3 { animation: pzFloat 6s ease-in-out infinite 0.6s; }
 .pz-word { display: inline-block; animation: pzFadeWord 0.5s var(--pz-ease-out) both; }
+@keyframes pzAurora {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.9; }
+  100% { transform: scale(1.14) translate(2%, -1.5%); opacity: 1; }
+}
+.pz-aurora { animation: pzAurora 16s ease-in-out infinite alternate; will-change: transform, opacity; }
 
 @keyframes pzSpinSlow { to { transform: rotate(360deg); } }
 .pz-spin-slow { animation: pzSpinSlow 22s linear infinite; }
