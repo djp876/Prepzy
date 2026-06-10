@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "../prepzy-kit/styles/tokens.css";
 import "./globals.css";
-import { SmoothScroll } from "./components/SmoothScroll";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -23,9 +22,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={poppins.variable}>
-      <body suppressHydrationWarning>
-        <SmoothScroll>{children}</SmoothScroll>
-      </body>
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }
