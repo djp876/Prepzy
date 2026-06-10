@@ -170,6 +170,42 @@ html.lenis body {
   }
 }
 
+/* === HeroV2: tutor-led interactive split === */
+.pz-herov2 {
+  display: grid;
+  gap: clamp(28px, 4vw, 56px);
+  grid-template-columns: 1fr 1.05fr;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .pz-herov2 {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+.pz-tab {
+  transition: background var(--pz-dur-fast) var(--pz-ease-out),
+    color var(--pz-dur-fast) var(--pz-ease-out),
+    border-color var(--pz-dur-fast) var(--pz-ease-out),
+    transform var(--pz-dur-fast) var(--pz-ease-out);
+}
+.pz-tab:hover {
+  transform: translateY(-1px);
+}
+@keyframes pzFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.pz-fade {
+  animation: pzFadeIn var(--pz-dur-slow) var(--pz-ease-out) both;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
