@@ -127,7 +127,7 @@ function InteractiveBg() {
           position: "absolute",
           inset: "-25%",
           background:
-            "radial-gradient(38% 48% at calc(22% + var(--ax, 0px)) calc(22% + var(--ay, 0px)), rgba(124,107,224,0.34), transparent 70%), radial-gradient(42% 52% at calc(82% + var(--ax, 0px)) calc(24% - var(--ay, 0px)), rgba(255,184,77,0.36), transparent 70%), radial-gradient(48% 58% at calc(76% - var(--ax, 0px)) calc(82% + var(--ay, 0px)), rgba(214,109,109,0.24), transparent 70%), radial-gradient(46% 56% at calc(16% - var(--ax, 0px)) calc(82% - var(--ay, 0px)), rgba(120,200,170,0.26), transparent 72%)",
+            "radial-gradient(40% 50% at calc(20% + var(--ax, 0px)) calc(20% + var(--ay, 0px)), rgba(124,107,224,0.16), transparent 70%), radial-gradient(46% 56% at calc(82% + var(--ax, 0px)) calc(22% - var(--ay, 0px)), rgba(255,176,59,0.50), transparent 70%), radial-gradient(50% 60% at calc(78% - var(--ax, 0px)) calc(84% + var(--ay, 0px)), rgba(255,138,92,0.34), transparent 70%), radial-gradient(46% 56% at calc(16% - var(--ax, 0px)) calc(80% - var(--ay, 0px)), rgba(255,206,140,0.40), transparent 72%)",
           filter: "blur(48px)",
         }}
       />
@@ -149,7 +149,7 @@ function InteractiveBg() {
 /* ---------------- Hero (centered, rotating headline) ---------------- */
 function Hero() {
   return (
-    <section className="pz-v5-hero" style={{ position: "relative", overflow: "hidden", minHeight: "calc(100svh - 76px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "clamp(36px, 6vh, 76px) 16px clamp(44px, 7vh, 84px)" }}>
+    <section className="pz-v5-hero" style={{ position: "relative", overflow: "hidden", background: "linear-gradient(180deg, #fff4e2 0%, #ffe7c5 100%)", minHeight: "calc(100svh - 76px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "clamp(36px, 6vh, 76px) 16px clamp(44px, 7vh, 84px)" }}>
       <InteractiveBg />
       <div style={{ position: "relative", zIndex: 2, maxWidth: 880, margin: "0 auto", textAlign: "center" }}>
         <span className="pz-pop" style={{ display: "inline-flex", alignItems: "center", gap: 9, background: "#fff", border: "1px solid var(--pz-line)", borderRadius: "var(--pz-radius-pill)", padding: "7px 14px", fontSize: 13, fontWeight: 600, color: PURPLE, boxShadow: "0 8px 20px -12px rgba(36,29,82,0.3)" }}>
