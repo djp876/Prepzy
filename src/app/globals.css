@@ -338,6 +338,8 @@ html.lenis body {
   100% { transform: scale(1.14) translate(2%, -1.5%); opacity: 1; }
 }
 .pz-aurora { animation: pzAurora 16s ease-in-out infinite alternate; will-change: transform, opacity; }
+.pz-dot { width: 7px; height: 7px; border-radius: 50%; background: #bdb4e0; display: inline-block; animation: pzDot 1s ease-in-out infinite; }
+@keyframes pzDot { 0%, 100% { transform: translateY(0); opacity: 0.5; } 50% { transform: translateY(-3px); opacity: 1; } }
 
 @keyframes pzSpinSlow { to { transform: rotate(360deg); } }
 .pz-spin-slow { animation: pzSpinSlow 22s linear infinite; }
