@@ -30,24 +30,24 @@ export function HeroV4() {
     const calc = () => {
       const cw = Math.min(520, window.innerWidth * 0.86);
       const ch = cw * 0.619;
-      setCover(Math.max(window.innerWidth / cw, window.innerHeight / ch) * 1.25);
+      setCover(Math.max(window.innerWidth / cw, window.innerHeight / ch) * 1.35);
     };
     calc();
     window.addEventListener("resize", calc);
     return () => window.removeEventListener("resize", calc);
   }, []);
 
-  const vidScale = useTransform(scrollYProgress, [0, 0.72], [1, cover]);
-  const vidRadius = useTransform(scrollYProgress, [0, 0.45], [22, 0]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.24], [1, 0]);
-  const textY = useTransform(scrollYProgress, [0, 0.24], [0, -26]);
-  const decOpacity = useTransform(scrollYProgress, [0.04, 0.22], [1, 0]);
-  const barW = useTransform(scrollYProgress, [0.05, 0.66], ["7%", "100%"]);
+  const vidScale = useTransform(scrollYProgress, [0, 0.62], [1, cover]);
+  const vidRadius = useTransform(scrollYProgress, [0, 0.4], [22, 0]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 0.2], [0, -26]);
+  const decOpacity = useTransform(scrollYProgress, [0.05, 0.34], [1, 0]);
+  const barW = useTransform(scrollYProgress, [0.05, 0.55], ["7%", "100%"]);
   const hintOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
   const [sec, setSec] = useState(reduce ? 12 : 0);
   useMotionValueEvent(scrollYProgress, "change", (v) => {
-    if (!reduce) setSec(Math.min(30, Math.round((v / 0.66) * 30)));
+    if (!reduce) setSec(Math.min(30, Math.round((v / 0.55) * 30)));
   });
   const tc = `0:${String(Math.min(30, sec)).padStart(2, "0")}`;
 
@@ -89,37 +89,39 @@ export function HeroV4() {
             }
           >
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(165deg, #3d348b 0%, #2a2160 55%, #1d1646 100%)" }}>
-              <motion.span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "clamp(26px,3.4vw,38px)", fontWeight: 800, color: "rgba(255,255,255,0.06)", ...(reduce ? {} : { opacity: decOpacity }) }}>
-                2x + 5 = 15
-              </motion.span>
-
-              <motion.div style={{ position: "absolute", top: 16, left: 14, ...(reduce ? {} : { opacity: decOpacity }) }}>
-                <div style={{ background: "#fff", borderRadius: 13, padding: "9px 11px", display: "flex", gap: 9, alignItems: "center", boxShadow: "0 14px 30px -16px rgba(0,0,0,0.5)", maxWidth: 260 }}>
-                  <span style={{ width: 28, height: 28, borderRadius: "50%", background: PURPLE_DEEP, color: "#fff", fontSize: 12, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flex: "none" }}>A</span>
-                  <span style={{ minWidth: 0, textAlign: "left" }}>
-                    <span style={{ display: "block", fontSize: 12, fontWeight: 700, color: INK, lineHeight: 1.2 }}>Atlas · now</span>
-                    <span style={{ display: "block", fontSize: 11, color: "#6b6b80", lineHeight: 1.3 }}>Doubt cleared. Explained in 3 steps.</span>
+              {/* decorations — single opacity layer that fades as the video opens */}
+              <motion.div style={{ position: "absolute", inset: 0, ...(reduce ? {} : { opacity: decOpacity }) }}>
+                <span style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "clamp(26px,3.4vw,38px)", fontWeight: 800, color: "rgba(255,255,255,0.06)" }}>
+                  2x + 5 = 15
+                </span>
+                <div style={{ position: "absolute", top: 16, left: 14 }}>
+                  <div style={{ background: "#fff", borderRadius: 13, padding: "9px 11px", display: "flex", gap: 9, alignItems: "center", boxShadow: "0 14px 30px -16px rgba(0,0,0,0.5)", maxWidth: 260 }}>
+                    <span style={{ width: 28, height: 28, borderRadius: "50%", background: PURPLE_DEEP, color: "#fff", fontSize: 12, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flex: "none" }}>A</span>
+                    <span style={{ minWidth: 0, textAlign: "left" }}>
+                      <span style={{ display: "block", fontSize: 12, fontWeight: 700, color: INK, lineHeight: 1.2 }}>Atlas · now</span>
+                      <span style={{ display: "block", fontSize: 11, color: "#6b6b80", lineHeight: 1.3 }}>Doubt cleared. Explained in 3 steps.</span>
+                    </span>
+                  </div>
+                </div>
+                <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "24px 16px 14px", background: "linear-gradient(0deg, rgba(13,8,36,0.9), transparent)" }}>
+                  <span style={{ display: "inline-flex", alignItems: "center", gap: 7, background: "rgba(255,255,255,0.14)", border: "1px solid rgba(255,255,255,0.22)", color: "#fff", borderRadius: "var(--pz-radius-pill)", padding: "4px 11px", fontSize: 11, fontWeight: 600 }}>
+                    Prepzy in 30 seconds
                   </span>
+                  <div style={{ display: "flex", alignItems: "center", gap: 9, marginTop: 10 }}>
+                    <span style={{ position: "relative", flex: 1, height: 4, borderRadius: 4, background: "rgba(255,255,255,0.22)", overflow: "hidden" }}>
+                      <motion.span style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: reduce ? "40%" : barW, background: AMBER, borderRadius: 4 }} />
+                    </span>
+                    <span style={{ fontSize: 10.5, fontWeight: 600, color: "rgba(255,255,255,0.85)", fontVariantNumeric: "tabular-nums" }}>{tc} / 0:30</span>
+                  </div>
                 </div>
               </motion.div>
 
+              {/* play — stays through the expand */}
               <span className="pz-play-pos" style={{ zIndex: 3 }}>
                 <span className="pz-play" style={{ width: 58, height: 58, borderRadius: "50%", background: AMBER, display: "flex", alignItems: "center", justifyContent: "center", color: INK }}>
                   <Play size={22} fill={INK} style={{ marginLeft: 3 }} />
                 </span>
               </span>
-
-              <motion.div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "24px 16px 14px", background: "linear-gradient(0deg, rgba(13,8,36,0.9), transparent)", ...(reduce ? {} : { opacity: decOpacity }) }}>
-                <span style={{ display: "inline-flex", alignItems: "center", gap: 7, background: "rgba(255,255,255,0.14)", border: "1px solid rgba(255,255,255,0.22)", color: "#fff", borderRadius: "var(--pz-radius-pill)", padding: "4px 11px", fontSize: 11, fontWeight: 600 }}>
-                  Prepzy in 30 seconds
-                </span>
-                <div style={{ display: "flex", alignItems: "center", gap: 9, marginTop: 10 }}>
-                  <span style={{ position: "relative", flex: 1, height: 4, borderRadius: 4, background: "rgba(255,255,255,0.22)", overflow: "hidden" }}>
-                    <motion.span style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: reduce ? "40%" : barW, background: AMBER, borderRadius: 4 }} />
-                  </span>
-                  <span style={{ fontSize: 10.5, fontWeight: 600, color: "rgba(255,255,255,0.85)", fontVariantNumeric: "tabular-nums" }}>{tc} / 0:30</span>
-                </div>
-              </motion.div>
             </div>
           </motion.div>
         </div>
