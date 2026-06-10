@@ -324,6 +324,48 @@ html.lenis body {
   transform: translateY(-1px);
 }
 
+/* === Playful homepage (v5) === */
+@keyframes pzFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.pz-float { animation: pzFloat 5s ease-in-out infinite; }
+.pz-float-2 { animation: pzFloat 7s ease-in-out infinite; }
+.pz-float-3 { animation: pzFloat 6s ease-in-out infinite 0.6s; }
+
+@keyframes pzSpinSlow { to { transform: rotate(360deg); } }
+.pz-spin-slow { animation: pzSpinSlow 22s linear infinite; }
+
+@keyframes pzWobble {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-4deg); }
+  75% { transform: rotate(4deg); }
+}
+.pz-wobble:hover { animation: pzWobble 0.5s var(--pz-ease-out); }
+
+@keyframes pzMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.pz-marq { display: flex; width: max-content; animation: pzMarquee 28s linear infinite; }
+.pz-marq:hover { animation-play-state: paused; }
+
+@keyframes pzPop {
+  from { opacity: 0; transform: translateY(22px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+.pz-pop { animation: pzPop 0.6s var(--pz-ease-out) both; }
+
+.pz-rv { opacity: 0; transform: translateY(26px); transition: opacity 0.7s var(--pz-ease-out), transform 0.7s var(--pz-ease-out); }
+.pz-rv.pz-in { opacity: 1; transform: none; }
+
+.pz-lift { transition: transform var(--pz-dur) var(--pz-ease-out), box-shadow var(--pz-dur) var(--pz-ease-out); }
+.pz-lift:hover { transform: translateY(-6px); }
+
+.pz-acc { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--pz-dur-slow) var(--pz-ease-out); }
+.pz-acc.pz-open { grid-template-rows: 1fr; }
+.pz-acc > div { overflow: hidden; }
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -332,4 +374,5 @@ html.lenis body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
+  .pz-rv { opacity: 1; transform: none; }
 }
