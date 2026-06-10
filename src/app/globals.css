@@ -53,6 +53,23 @@ html.lenis body {
   }
 }
 
+/* Hero media play button pulse + compass hover */
+@keyframes pzPlayPulse {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.07);
+  }
+}
+.pz-play {
+  animation: pzPlayPulse 2.6s ease-in-out infinite;
+}
+.pz-compass:hover {
+  transform: rotate(70deg);
+}
+
 /* Hero flip-word entrance */
 @keyframes pzFadeWord {
   0% {
