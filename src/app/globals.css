@@ -332,6 +332,7 @@ html.lenis body {
 .pz-float { animation: pzFloat 5s ease-in-out infinite; }
 .pz-float-2 { animation: pzFloat 7s ease-in-out infinite; }
 .pz-float-3 { animation: pzFloat 6s ease-in-out infinite 0.6s; }
+.pz-word { display: inline-block; animation: pzFadeWord 0.5s var(--pz-ease-out) both; }
 
 @keyframes pzSpinSlow { to { transform: rotate(360deg); } }
 .pz-spin-slow { animation: pzSpinSlow 22s linear infinite; }

@@ -52,23 +52,36 @@ function H2({ children }: { children: React.ReactNode }) {
 }
 
 /* ---------------- Nav ---------------- */
+const ROT_WORDS = ["Personalized", "Smart", "Daily", "Trusted", "Interactive"];
+
+function RotatingWord({ words, color }: { words: ReadonlyArray<string>; color: string }) {
+  const reduce = usePrefersReducedMotion();
+  const [i, setI] = useState(1); // start on "Smart"
+  useEffect(() => {
+    if (reduce) return;
+    const id = window.setInterval(() => setI((p) => (p + 1) % words.length), 2200);
+    return () => window.clearInterval(id);
+  }, [reduce, words.length]);
+  return <span key={i} className="pz-word" style={{ color, fontStyle: "italic" }}>{words[i]}</span>;
+}
+
 function Nav() {
-  const links = ["Home", "Courses", "Pricing", "About", "Contact"];
+  const links = ["Learn", "Courses", "Pricing", "About"];
   return (
-    <header className="sticky top-0 z-50 w-full" style={{ padding: "14px 16px 0" }}>
-      <nav className="mx-auto flex w-full items-center justify-between" style={{ maxWidth: 1200, background: "rgba(255,255,255,0.86)", backdropFilter: "blur(10px)", WebkitBackdropFilter: "blur(10px)", border: "1px solid var(--pz-line)", borderRadius: "var(--pz-radius-pill)", padding: "9px 12px 9px 22px", boxShadow: "0 8px 24px -14px rgba(36,29,82,0.3)" }}>
+    <header className="sticky top-0 z-50 w-full" style={{ background: "transparent", padding: "20px 24px" }}>
+      <nav className="mx-auto flex w-full items-center justify-between" style={{ maxWidth: 1200 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/prepzy-logo.png" alt="Prepzy" style={{ height: 30, width: "auto", display: "block" }} />
-        <ul className="hidden items-center lg:flex" style={{ gap: 24, listStyle: "none", margin: 0, padding: 0 }}>
-          {links.map((l, i) => (
-            <li key={l}><a href="#" style={{ fontSize: 14, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? PURPLE : INK, textDecoration: "none" }}>{l}</a></li>
+        <img src="/prepzy-logo.png" alt="Prepzy" style={{ height: 32, width: "auto", display: "block" }} />
+        <ul className="hidden items-center lg:flex" style={{ gap: 30, listStyle: "none", margin: 0, padding: 0, position: "absolute", left: "50%", transform: "translateX(-50%)" }}>
+          {links.map((l) => (
+            <li key={l}><a href="#" style={{ fontSize: 15, fontWeight: 600, color: INK, textDecoration: "none" }}>{l}</a></li>
           ))}
         </ul>
-        <div className="flex items-center" style={{ gap: 8 }}>
-          <a href="#" className="hidden sm:inline-flex" style={{ color: INK, fontSize: 14, fontWeight: 600, textDecoration: "none", padding: "10px 14px" }}>Log in</a>
-          <a href="#" className="pz-cta" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: AMBER, color: INK, borderRadius: "var(--pz-radius-pill)", padding: "10px 12px 10px 18px", fontSize: 14, fontWeight: 700, textDecoration: "none", boxShadow: "0 10px 20px -10px rgba(255,184,77,0.8)" }}>
+        <div className="flex items-center" style={{ gap: 10 }}>
+          <a href="#" className="hidden sm:inline-flex" style={{ color: INK, fontSize: 15, fontWeight: 600, textDecoration: "none", padding: "10px 8px" }}>Log in</a>
+          <a href="#" className="pz-cta" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: PURPLE, color: "#fff", borderRadius: "30px 30px 30px 7px", padding: "11px 12px 11px 20px", fontSize: 14.5, fontWeight: 700, textDecoration: "none", boxShadow: "0 12px 24px -10px rgba(61,52,139,0.6)" }}>
             Get started
-            <span className="pz-cta-ico" style={{ width: 26, height: 26, borderRadius: "50%", background: INK, display: "inline-flex", alignItems: "center", justifyContent: "center" }}><ArrowUpRight size={15} color={AMBER} /></span>
+            <span className="pz-cta-ico" style={{ width: 26, height: 26, borderRadius: "50%", background: "rgba(255,255,255,0.22)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}><ArrowUpRight size={15} color="#fff" /></span>
           </a>
           <button aria-label="Open menu" className="inline-flex items-center justify-center lg:hidden" style={{ width: 42, height: 42, borderRadius: "var(--pz-radius-pill)", background: LAV, border: "none", color: PURPLE, cursor: "pointer" }}><Menu size={20} /></button>
         </div>
@@ -77,70 +90,41 @@ function Nav() {
   );
 }
 
-/* ---------------- Hero (real photo split) ---------------- */
-function Hero({ reduce }: { reduce: boolean }) {
+/* ---------------- Hero (centered, rotating headline) ---------------- */
+function Hero() {
   return (
-    <section className="pz-v5-hero">
-      <span className="pz-v5-blob" style={{ width: 340, height: 340, top: -90, left: -80, background: LAV, opacity: 0.7 }} aria-hidden />
-      <span className="pz-v5-blob" style={{ width: 300, height: 300, bottom: -90, right: -70, background: "#fdeccd", opacity: 0.8 }} aria-hidden />
-      <div className="pz-v5-grid">
-        {/* left */}
-        <div>
-          <span className="pz-pop" style={{ display: "inline-flex", alignItems: "center", gap: 9, background: "#fff", border: "1px solid var(--pz-line)", borderRadius: "var(--pz-radius-pill)", padding: "7px 14px", fontSize: 13, fontWeight: 600, color: PURPLE, boxShadow: "0 8px 20px -12px rgba(36,29,82,0.3)" }}>
-            <span style={{ display: "inline-flex", gap: 2 }}>{[0, 1, 2, 3, 4].map((i) => <Star key={i} size={13} fill={AMBER} color={AMBER} />)}</span>
-            Loved by 2,00,000+ learners
-          </span>
-          <h1 className="pz-pop" style={{ fontSize: "clamp(38px, 5.6vw, 66px)", fontWeight: 800, lineHeight: 1.04, letterSpacing: "-0.03em", color: INK, margin: "18px 0 0" }}>
-            Learning that finally{" "}
-            <span style={{ position: "relative", color: PURPLE, whiteSpace: "nowrap" }}>
-              clicks
-              <svg viewBox="0 0 200 18" preserveAspectRatio="none" aria-hidden style={{ position: "absolute", left: 0, bottom: "-0.16em", width: "100%", height: "0.34em" }}>
-                <path d="M3 13 C 50 4, 150 4, 197 11" fill="none" stroke={AMBER} strokeWidth="6" strokeLinecap="round" />
-              </svg>
-            </span>
-            .
-          </h1>
-          <p className="pz-pop" style={{ fontSize: "clamp(15px, 1.7vw, 18px)", color: MUTED, lineHeight: 1.55, margin: "18px 0 0", maxWidth: 460 }}>
-            Video lessons, 24×7 doubt-solving and practice that actually sticks. Your friendly study companion for CBSE 6-12 and NEET-UG.
-          </p>
-          <div className="pz-pop flex items-center" style={{ gap: 14, marginTop: 28, flexWrap: "wrap" }}>
-            <a href="#" className="pz-cta" style={{ display: "inline-flex", alignItems: "center", gap: 10, background: AMBER, color: INK, borderRadius: "var(--pz-radius-pill)", padding: "14px 14px 14px 24px", fontWeight: 700, fontSize: 16, textDecoration: "none", boxShadow: "0 18px 32px -14px rgba(255,184,77,0.85)" }}>
-              Get started free
-              <span className="pz-cta-ico" style={{ width: 32, height: 32, borderRadius: "50%", background: INK, display: "inline-flex", alignItems: "center", justifyContent: "center" }}><ArrowUpRight size={17} color={AMBER} /></span>
-            </a>
-            <a href="#showcase" className="pz-cta" style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#fff", color: INK, border: "1px solid var(--pz-line)", borderRadius: "var(--pz-radius-pill)", padding: "13px 22px 13px 14px", fontWeight: 600, fontSize: 16, textDecoration: "none" }}>
-              <span className="pz-cta-ico" style={{ width: 32, height: 32, borderRadius: "50%", background: LAV, display: "inline-flex", alignItems: "center", justifyContent: "center" }}><Play size={14} fill={PURPLE} color={PURPLE} style={{ marginLeft: 2 }} /></span>
-              Watch the demo
-            </a>
-          </div>
-          <div className="pz-pop" style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 26, flexWrap: "wrap" }}>
-            <span className="pz-avatars">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              {FACES.slice(0, 4).map((f) => <img key={f} src={ph(f, 80, 80, true)} alt="Prepzy learner" />)}
-            </span>
-            <span style={{ fontSize: 13.5, color: MUTED }}>Joined by students across <strong style={{ color: INK }}>India</strong></span>
-          </div>
+    <section className="pz-v5-hero" style={{ padding: "clamp(24px, 4vw, 56px) 16px clamp(56px, 8vw, 104px)" }}>
+      <span className="pz-v5-blob" style={{ width: 340, height: 340, top: -80, left: "6%", background: LAV, opacity: 0.7 }} aria-hidden />
+      <span className="pz-v5-blob" style={{ width: 300, height: 300, bottom: -90, right: "6%", background: "#fdeccd", opacity: 0.8 }} aria-hidden />
+      <div style={{ position: "relative", zIndex: 2, maxWidth: 880, margin: "0 auto", textAlign: "center" }}>
+        <span className="pz-pop" style={{ display: "inline-flex", alignItems: "center", gap: 9, background: "#fff", border: "1px solid var(--pz-line)", borderRadius: "var(--pz-radius-pill)", padding: "7px 14px", fontSize: 13, fontWeight: 600, color: PURPLE, boxShadow: "0 8px 20px -12px rgba(36,29,82,0.3)" }}>
+          <span style={{ display: "inline-flex", gap: 2 }}>{[0, 1, 2, 3, 4].map((i) => <Star key={i} size={13} fill={AMBER} color={AMBER} />)}</span>
+          Loved by 2,00,000+ learners
+        </span>
+        <h1 className="pz-pop" style={{ fontSize: "clamp(40px, 7vw, 76px)", fontWeight: 800, lineHeight: 1.03, letterSpacing: "-0.03em", color: INK, margin: "22px 0 0" }}>
+          Your <RotatingWord words={ROT_WORDS} color={AMBER} />
+          <br />
+          Learning Companion.
+        </h1>
+        <p className="pz-pop" style={{ fontSize: "clamp(16px, 1.8vw, 19px)", color: MUTED, lineHeight: 1.55, margin: "20px auto 0", maxWidth: 520 }}>
+          Video lessons, 24×7 doubt-solving and practice that actually sticks. Your friendly study companion for CBSE 6-12 and NEET-UG.
+        </p>
+        <div className="pz-pop flex items-center justify-center" style={{ gap: 14, marginTop: 30, flexWrap: "wrap" }}>
+          <a href="#" className="pz-cta" style={{ display: "inline-flex", alignItems: "center", gap: 10, background: PURPLE, color: "#fff", borderRadius: "var(--pz-radius-pill)", padding: "14px 14px 14px 26px", fontWeight: 700, fontSize: 16, textDecoration: "none", boxShadow: "0 18px 32px -14px rgba(61,52,139,0.7)" }}>
+            Get started free
+            <span className="pz-cta-ico" style={{ width: 32, height: 32, borderRadius: "50%", background: "rgba(255,255,255,0.22)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}><ArrowUpRight size={17} color="#fff" /></span>
+          </a>
+          <a href="#showcase" className="pz-cta" style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#fff", color: INK, border: "1px solid var(--pz-line)", borderRadius: "var(--pz-radius-pill)", padding: "13px 22px 13px 14px", fontWeight: 600, fontSize: 16, textDecoration: "none" }}>
+            <span className="pz-cta-ico" style={{ width: 32, height: 32, borderRadius: "50%", background: LAV, display: "inline-flex", alignItems: "center", justifyContent: "center" }}><Play size={14} fill={PURPLE} color={PURPLE} style={{ marginLeft: 2 }} /></span>
+            Watch the demo
+          </a>
         </div>
-
-        {/* right: real photo + floating cards */}
-        <div className="pz-pop" style={{ position: "relative" }}>
-          <div className={reduce ? "" : "pz-tilt"} style={{ position: "relative", borderRadius: 28, overflow: "hidden", border: "6px solid #fff", boxShadow: "0 40px 80px -36px rgba(36,29,82,0.5)", aspectRatio: "4 / 5" }}>
+        <div className="pz-pop" style={{ display: "inline-flex", alignItems: "center", gap: 12, marginTop: 26 }}>
+          <span className="pz-avatars">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={ph(HERO_PHOTO, 800, 1000)} alt="Student learning with Prepzy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
-          </div>
-          {/* floating UI card: Atlas reply */}
-          <div className={reduce ? "" : "pz-float"} style={{ position: "absolute", top: 22, left: -18, background: "#fff", borderRadius: 16, padding: "11px 13px", display: "flex", gap: 9, alignItems: "center", boxShadow: "0 22px 44px -22px rgba(36,29,82,0.55)", maxWidth: 230 }}>
-            <span style={{ width: 30, height: 30, borderRadius: "50%", background: PURPLE_DEEP, color: "#fff", fontSize: 13, fontWeight: 800, display: "flex", alignItems: "center", justifyContent: "center", flex: "none" }}>A</span>
-            <span style={{ minWidth: 0 }}>
-              <span style={{ display: "block", fontSize: 12.5, fontWeight: 700, color: INK }}>Atlas</span>
-              <span style={{ display: "flex", alignItems: "center", gap: 5, fontSize: 11.5, color: GREEN, fontWeight: 600 }}><Check size={13} strokeWidth={3} /> Doubt cleared in 3 steps</span>
-            </span>
-          </div>
-          {/* floating stat chip */}
-          <div className={reduce ? "" : "pz-float-2"} style={{ position: "absolute", bottom: 26, right: -16, background: AMBER, borderRadius: 16, padding: "12px 16px", boxShadow: "0 22px 44px -20px rgba(255,184,77,0.9)" }}>
-            <span style={{ display: "block", fontSize: 22, fontWeight: 800, color: INK, lineHeight: 1 }}>+18%</span>
-            <span style={{ display: "block", fontSize: 11.5, fontWeight: 600, color: "#6b4a12", marginTop: 2 }}>avg. score lift</span>
-          </div>
+            {FACES.slice(0, 4).map((f) => <img key={f} src={ph(f, 80, 80, true)} alt="Prepzy learner" />)}
+          </span>
+          <span style={{ fontSize: 13.5, color: MUTED }}>Joined by students across <strong style={{ color: INK }}>India</strong></span>
         </div>
       </div>
     </section>
@@ -367,7 +351,7 @@ export function HomeV6() {
     <div style={{ background: CREAM }}>
       <Nav />
       <main>
-        <Hero reduce={reduce} />
+        <Hero />
         <Marquee />
         <ScrollVideo />
         <div className="pz-rv"><ExperiencePrepzy /></div>
