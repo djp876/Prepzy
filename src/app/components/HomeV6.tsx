@@ -90,27 +90,30 @@ function Nav() {
   );
 }
 
-/* ---------------- Interactive background (mouse-parallax orbs) ---------------- */
+/* ---------------- Interactive background (cursor spotlight + dot grid) ---------------- */
 function InteractiveBg() {
   const reduce = usePrefersReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
+  const glow = useRef<HTMLSpanElement>(null);
   useEffect(() => {
     if (reduce) return;
     const el = ref.current;
-    if (!el) return;
+    const g = glow.current;
+    if (!el || !g) return;
     let raf = 0;
-    let tx = 0, ty = 0, cx = 0, cy = 0;
+    let tx = el.clientWidth / 2;
+    let ty = el.clientHeight * 0.4;
+    let cx = tx;
+    let cy = ty;
     const onMove = (e: MouseEvent) => {
-      tx = e.clientX / window.innerWidth - 0.5;
-      ty = e.clientY / window.innerHeight - 0.5;
+      const r = el.getBoundingClientRect();
+      tx = e.clientX - r.left;
+      ty = e.clientY - r.top;
     };
     const tick = () => {
-      cx += (tx - cx) * 0.06;
-      cy += (ty - cy) * 0.06;
-      el.querySelectorAll<HTMLElement>("[data-depth]").forEach((b) => {
-        const d = Number(b.dataset.depth);
-        b.style.transform = `translate(${cx * d}px, ${cy * d}px)`;
-      });
+      cx += (tx - cx) * 0.08;
+      cy += (ty - cy) * 0.08;
+      g.style.transform = `translate(${cx}px, ${cy}px)`;
       raf = requestAnimationFrame(tick);
     };
     window.addEventListener("mousemove", onMove);
@@ -121,19 +124,12 @@ function InteractiveBg() {
     };
   }, [reduce]);
 
-  const orbs = [
-    { d: -60, cls: "pz-float", s: { top: "14%", left: "9%", width: 300, height: 300, background: "radial-gradient(circle, rgba(124,107,224,0.40), transparent 70%)" } },
-    { d: 48, cls: "pz-float-2", s: { top: "54%", left: "4%", width: 250, height: 250, background: "radial-gradient(circle, rgba(255,184,77,0.46), transparent 70%)" } },
-    { d: -44, cls: "pz-float-3", s: { top: "15%", right: "7%", width: 320, height: 320, background: "radial-gradient(circle, rgba(255,148,158,0.34), transparent 70%)" } },
-    { d: 56, cls: "pz-float", s: { bottom: "9%", right: "13%", width: 240, height: 240, background: "radial-gradient(circle, rgba(118,201,170,0.36), transparent 70%)" } },
-  ];
-
   return (
     <div ref={ref} aria-hidden style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
-      {orbs.map((o, i) => (
-        <span key={i} data-depth={o.d} className={reduce ? "" : o.cls} style={{ position: "absolute", borderRadius: "50%", filter: "blur(26px)", willChange: "transform", ...o.s }} />
-      ))}
-      <span style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(61,52,139,0.08) 1px, transparent 1.5px)", backgroundSize: "26px 26px", WebkitMaskImage: "radial-gradient(ellipse 76% 66% at 50% 42%, #000 48%, transparent 100%)", maskImage: "radial-gradient(ellipse 76% 66% at 50% 42%, #000 48%, transparent 100%)" }} />
+      <span style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(rgba(61,52,139,0.10) 1px, transparent 1.5px)", backgroundSize: "30px 30px", WebkitMaskImage: "radial-gradient(ellipse 82% 72% at 50% 40%, #000 52%, transparent 100%)", maskImage: "radial-gradient(ellipse 82% 72% at 50% 40%, #000 52%, transparent 100%)" }} />
+      {!reduce && (
+        <span ref={glow} style={{ position: "absolute", top: 0, left: 0, width: 560, height: 560, marginLeft: -280, marginTop: -280, borderRadius: "50%", background: "radial-gradient(circle, rgba(255,184,77,0.22), rgba(124,107,224,0.12) 45%, transparent 70%)", filter: "blur(24px)", willChange: "transform" }} />
+      )}
     </div>
   );
 }
@@ -183,7 +179,7 @@ function Marquee() {
   const items = ["90+ textbooks", "3,000+ video lessons", "2L+ practice questions", "1,000+ hours", "Chapter-by-chapter", "Previous-year papers", "Mock exams", "Doubt-solving 24×7"];
   const row = [...items, ...items];
   return (
-    <div style={{ background: PURPLE, padding: "15px 0", overflow: "hidden" }}>
+    <div style={{ background: PURPLE, padding: "24px 0", overflow: "hidden", borderRadius: "44px 44px 0 0", marginTop: -30, position: "relative", zIndex: 3 }}>
       <div className="pz-marq">
         {row.map((t, i) => (
           <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 22, padding: "0 22px", color: "#fff", fontWeight: 600, fontSize: 15, whiteSpace: "nowrap" }}>
@@ -232,8 +228,8 @@ function ScrollVideo() {
   const labelOpacity = useTransform(scrollYProgress, [0.05, 0.3], [1, 0]);
 
   return (
-    <div id="showcase" ref={ref} className="pz-sv-track">
-      <section className="pz-sv-sticky">
+    <div id="showcase" ref={ref} className="pz-sv-track" style={{ marginTop: -30, position: "relative", zIndex: 4 }}>
+      <section className="pz-sv-sticky" style={{ borderRadius: "44px 44px 0 0" }}>
         <motion.div style={{ textAlign: "center", padding: "0 20px", marginBottom: "clamp(22px,3vw,38px)", ...(reduce ? {} : { opacity: headOpacity, y: headY }) }}>
           <Eyebrow>Experience Prepzy</Eyebrow>
           <H2>Press play on better grades.</H2>
@@ -352,7 +348,7 @@ function FAQ() {
 /* ---------------- Footer ---------------- */
 function Footer() {
   return (
-    <footer style={{ background: PURPLE_DEEP, color: "#fff", padding: "clamp(48px, 6vw, 80px) 16px 40px" }}>
+    <footer style={{ background: PURPLE_DEEP, color: "#fff", padding: "clamp(48px, 6vw, 80px) 16px 40px", borderRadius: "48px 48px 0 0", marginTop: -28, position: "relative", zIndex: 2 }}>
       <div style={{ maxWidth: 1080, margin: "0 auto" }}>
         <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 20, paddingBottom: 32, borderBottom: "1px solid rgba(255,255,255,0.12)" }}>
           <h2 style={{ fontSize: "clamp(24px, 3vw, 34px)", fontWeight: 800, letterSpacing: "-0.02em", margin: 0 }}>Ready to make learning fun?</h2>
