@@ -128,7 +128,6 @@ export function HeroV8() {
   const scale = useTransform(scrollYProgress, [0, 0.72], [1, cover]);
   const radius = useTransform(scrollYProgress, [0, 0.55], [34, 0]);
   const bezelOpacity = useTransform(scrollYProgress, [0, 0.32], [1, 0]);
-  const decOpacity = useTransform(scrollYProgress, [0.03, 0.24], [1, 0]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const textY = useTransform(scrollYProgress, [0, 0.2], [0, -26]);
   const hintOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
@@ -139,7 +138,7 @@ export function HeroV8() {
         <AuroraBg />
 
         {/* text */}
-        <motion.div style={{ position: "relative", zIndex: 3, textAlign: "center", maxWidth: 760, ...(reduce ? {} : { opacity: textOpacity, y: textY }) }}>
+        <motion.div style={{ position: "relative", zIndex: 1, textAlign: "center", maxWidth: 760, ...(reduce ? {} : { opacity: textOpacity, y: textY }) }}>
           <span className="pz-pop" style={{ display: "inline-flex", alignItems: "center", gap: 9, background: "rgba(255,255,255,0.7)", backdropFilter: "blur(6px)", border: "1px solid var(--pz-line)", borderRadius: "var(--pz-radius-pill)", padding: "7px 14px", fontSize: 13, fontWeight: 600, color: PURPLE }}>
             <span style={{ display: "inline-flex", gap: 2 }}>{[0, 1, 2, 3, 4].map((i) => <Star key={i} size={13} fill={AMBER} color={AMBER} />)}</span>
             Loved by 2,00,000+ learners
@@ -168,8 +167,8 @@ export function HeroV8() {
         <motion.div
           style={
             reduce
-              ? { position: "relative", zIndex: 1, width: phoneW, aspectRatio: "1 / 2", marginTop: "clamp(28px, 4vh, 48px)" }
-              : { position: "relative", zIndex: 1, width: phoneW, aspectRatio: "1 / 2", marginTop: "clamp(28px, 4vh, 48px)", scale, transformOrigin: "center center" }
+              ? { position: "relative", zIndex: 2, width: phoneW, aspectRatio: "1 / 2", marginTop: "clamp(28px, 4vh, 48px)" }
+              : { position: "relative", zIndex: 2, width: phoneW, aspectRatio: "1 / 2", marginTop: "clamp(28px, 4vh, 48px)", scale, transformOrigin: "center center" }
           }
         >
           <motion.div style={{ position: "absolute", inset: 0, overflow: "hidden", ...(reduce ? { borderRadius: 34 } : { borderRadius: radius }) }}>
@@ -181,22 +180,12 @@ export function HeroV8() {
             <span style={{ position: "absolute", top: 8, left: "50%", transform: "translateX(-50%)", width: 78, height: 7, borderRadius: 6, background: "#15102e" }} />
           </motion.div>
 
-          {/* play + label (fades) */}
-          <motion.div style={{ position: "absolute", inset: 0, pointerEvents: "none", ...(reduce ? { opacity: 0 } : { opacity: decOpacity }) }}>
-            <span className="pz-play-pos" style={{ zIndex: 2 }}>
-              <span className="pz-play" style={{ width: 56, height: 56, borderRadius: "50%", background: AMBER, display: "flex", alignItems: "center", justifyContent: "center", color: INK }}>
-                <Play size={21} fill={INK} style={{ marginLeft: 3 }} />
-              </span>
-            </span>
-            <span style={{ position: "absolute", left: 14, bottom: 14, display: "inline-flex", alignItems: "center", gap: 6, background: "rgba(13,8,36,0.55)", color: "#fff", borderRadius: "var(--pz-radius-pill)", padding: "5px 11px", fontSize: 11, fontWeight: 600, backdropFilter: "blur(4px)" }}>
-              Prepzy in 30 seconds
-            </span>
-          </motion.div>
+          {/* video autoplays — no overlay */}
         </motion.div>
 
         {!reduce && (
-          <motion.span style={{ position: "absolute", bottom: "5%", left: 0, right: 0, textAlign: "center", zIndex: 3, opacity: hintOpacity, color: MUTED, fontSize: 12.5, fontWeight: 500 }}>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 7 }}>Scroll to play <ChevronDown size={15} /></span>
+          <motion.span style={{ position: "absolute", bottom: "5%", left: 0, right: 0, textAlign: "center", zIndex: 1, opacity: hintOpacity, color: MUTED, fontSize: 12.5, fontWeight: 500 }}>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 7 }}>Scroll to watch <ChevronDown size={15} /></span>
           </motion.span>
         )}
       </section>
