@@ -90,17 +90,44 @@ function Nav() {
   );
 }
 
-/* ---------------- Aurora mesh + grain background ---------------- */
+/* ---------------- Interactive aurora mesh (cursor-reactive) + grain ---------------- */
 function InteractiveBg() {
+  const reduce = usePrefersReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (reduce) return;
+    const el = ref.current;
+    if (!el) return;
+    let raf = 0;
+    let tx = 0, ty = 0, cx = 0, cy = 0;
+    const onMove = (e: MouseEvent) => {
+      tx = (e.clientX / window.innerWidth - 0.5) * 64;
+      ty = (e.clientY / window.innerHeight - 0.5) * 64;
+    };
+    const tick = () => {
+      cx += (tx - cx) * 0.05;
+      cy += (ty - cy) * 0.05;
+      el.style.setProperty("--ax", `${cx.toFixed(1)}px`);
+      el.style.setProperty("--ay", `${cy.toFixed(1)}px`);
+      raf = requestAnimationFrame(tick);
+    };
+    window.addEventListener("mousemove", onMove);
+    raf = requestAnimationFrame(tick);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      cancelAnimationFrame(raf);
+    };
+  }, [reduce]);
+
   return (
-    <div aria-hidden style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
+    <div ref={ref} aria-hidden style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
       <div
         className="pz-aurora"
         style={{
           position: "absolute",
           inset: "-25%",
           background:
-            "radial-gradient(38% 48% at 22% 22%, rgba(124,107,224,0.34), transparent 70%), radial-gradient(42% 52% at 82% 24%, rgba(255,184,77,0.36), transparent 70%), radial-gradient(48% 58% at 76% 82%, rgba(214,109,109,0.24), transparent 70%), radial-gradient(46% 56% at 16% 82%, rgba(120,200,170,0.26), transparent 72%)",
+            "radial-gradient(38% 48% at calc(22% + var(--ax, 0px)) calc(22% + var(--ay, 0px)), rgba(124,107,224,0.34), transparent 70%), radial-gradient(42% 52% at calc(82% + var(--ax, 0px)) calc(24% - var(--ay, 0px)), rgba(255,184,77,0.36), transparent 70%), radial-gradient(48% 58% at calc(76% - var(--ax, 0px)) calc(82% + var(--ay, 0px)), rgba(214,109,109,0.24), transparent 70%), radial-gradient(46% 56% at calc(16% - var(--ax, 0px)) calc(82% - var(--ay, 0px)), rgba(120,200,170,0.26), transparent 72%)",
           filter: "blur(48px)",
         }}
       />
