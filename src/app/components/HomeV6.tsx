@@ -23,6 +23,7 @@ function ph(base: string, w: number, h?: number, faces?: boolean): string {
   return `${base}?auto=format&fit=crop&q=80&w=${w}${h ? `&h=${h}` : ""}${faces ? "&crop=faces" : ""}`;
 }
 const HERO_PHOTO = "https://images.unsplash.com/photo-1571260899304-425eee4c7efc";
+const POSTER = "https://images.unsplash.com/photo-1516534775068-ba3e7458af70";
 const FACES = [
   "https://images.unsplash.com/photo-1633700199686-bd546d6abb65",
   "https://images.unsplash.com/photo-1684531764645-df295a321850",
@@ -168,7 +169,18 @@ function Marquee() {
 function ScrollVideo() {
   const reduce = usePrefersReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
+  const vref = useRef<HTMLVideoElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+
+  useEffect(() => {
+    const v = vref.current;
+    if (!v) return;
+    const tryPlay = () => v.play().catch(() => {});
+    const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) tryPlay(); }), { threshold: 0.2 });
+    io.observe(v);
+    tryPlay();
+    return () => io.disconnect();
+  }, []);
 
   const [cover, setCover] = useState(2.6);
   useEffect(() => {
@@ -205,7 +217,7 @@ function ScrollVideo() {
               : { width: "min(620px, 88vw)", aspectRatio: "16 / 9", borderRadius: radius, scale, transformOrigin: "center center" }
           }
         >
-          <video src={VIDEO} autoPlay muted loop playsInline style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+          <video ref={vref} src={VIDEO} poster={ph(POSTER, 1280, 720)} autoPlay muted loop playsInline preload="auto" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
           <motion.span style={{ position: "absolute", left: 16, bottom: 14, display: "inline-flex", alignItems: "center", gap: 7, background: "rgba(13,8,36,0.6)", color: "#fff", borderRadius: "var(--pz-radius-pill)", padding: "6px 13px", fontSize: 12, fontWeight: 600, backdropFilter: "blur(4px)", ...(reduce ? {} : { opacity: labelOpacity }) }}>
             <Play size={12} fill="#fff" color="#fff" /> Prepzy in 30 seconds
           </motion.span>
