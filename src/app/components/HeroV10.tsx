@@ -1,16 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ArrowUpRight, Play, Star, Menu, GraduationCap, Stethoscope, ChevronDown } from "lucide-react";
+import { ArrowUpRight, Play, Star, Check, Menu } from "lucide-react";
 
 const PURPLE = "#3d348b";
 const AMBER = "#ffb84d";
 const LAV = "#ece9fb";
 const INK = "#1a1a2e";
-const GREEN = "#1d9e75";
-const ORANGE_INK = "#6b3e10";
+const MUTED = "#6b6b80";
 
-const ROT_WORDS = ["Personalized", "Smart", "Daily", "Trusted", "Interactive"];
+const ROT_WORDS = ["Adaptive", "Smart", "Personalised", "Interactive", "Daily"];
+const STATS: ReadonlyArray<{ to: number; suffix: string; label: string }> = [
+  { to: 90, suffix: "+", label: "Textbooks" },
+  { to: 3000, suffix: "+", label: "Videos" },
+  { to: 2, suffix: "L+", label: "Questions" },
+  { to: 1000, suffix: "+", label: "Hours" },
+];
 
 function usePrefersReducedMotion(): boolean {
   const [reduce, setReduce] = useState(false);
@@ -26,97 +31,150 @@ function usePrefersReducedMotion(): boolean {
 
 function RotatingWord({ words, color }: { words: ReadonlyArray<string>; color: string }) {
   const reduce = usePrefersReducedMotion();
-  const [i, setI] = useState(1);
+  const [i, setI] = useState(0);
   useEffect(() => {
     if (reduce) return;
     const id = window.setInterval(() => setI((p) => (p + 1) % words.length), 2200);
     return () => window.clearInterval(id);
   }, [reduce, words.length]);
-  return <span key={i} className="pz-word" style={{ color, fontStyle: "italic" }}>{words[i]}</span>;
+  return <span key={i} className="pz-word" style={{ color }}>{words[i]}</span>;
+}
+
+function CountUp({ to, suffix, reduce }: { to: number; suffix: string; reduce: boolean }) {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (reduce) { setVal(to); return; }
+    let raf = 0;
+    let start = 0;
+    const step = (t: number) => {
+      if (!start) start = t;
+      const p = Math.min(1, (t - start) / 1200);
+      setVal(Math.round((1 - Math.pow(1 - p, 3)) * to));
+      if (p < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [to, reduce]);
+  return <>{val.toLocaleString("en-IN")}{suffix}</>;
 }
 
 function Nav() {
-  const links = ["Learn", "Courses", "Pricing", "About"];
+  const links = ["Home", "About Us", "Courses", "Pricing", "Resources", "Contact"];
   return (
     <header className="sticky top-0 z-50 w-full" style={{ padding: "16px 16px 0" }}>
-      <nav className="mx-auto flex w-full items-center justify-between" style={{ position: "relative", maxWidth: 1140, background: "rgba(255,255,255,0.6)", backdropFilter: "blur(18px) saturate(150%)", WebkitBackdropFilter: "blur(18px) saturate(150%)", border: "1px solid rgba(255,255,255,0.85)", borderRadius: "var(--pz-radius-pill)", padding: "10px 12px 10px 22px", boxShadow: "0 14px 34px -18px rgba(120,70,10,0.4), inset 0 1px 1px rgba(255,255,255,0.7)" }}>
+      <nav className="mx-auto flex w-full items-center justify-between" style={{ position: "relative", maxWidth: 1160, background: "rgba(255,255,255,0.62)", backdropFilter: "blur(18px) saturate(150%)", WebkitBackdropFilter: "blur(18px) saturate(150%)", border: "1px solid rgba(255,255,255,0.8)", borderRadius: "var(--pz-radius-pill)", padding: "10px 12px 10px 22px", boxShadow: "0 14px 34px -18px rgba(36,29,82,0.3)" }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/prepzy-logo.png" alt="Prepzy" style={{ height: 32, width: "auto", display: "block" }} />
-        <ul className="hidden items-center lg:flex" style={{ gap: 30, listStyle: "none", margin: 0, padding: 0, position: "absolute", left: "50%", transform: "translateX(-50%)" }}>
-          {links.map((l) => (
-            <li key={l}><a href="#" style={{ fontSize: 15, fontWeight: 600, color: INK, textDecoration: "none" }}>{l}</a></li>
+        <img src="/prepzy-logo.png" alt="Prepzy" style={{ height: 30, width: "auto", display: "block" }} />
+        <ul className="hidden items-center lg:flex" style={{ gap: 26, listStyle: "none", margin: 0, padding: 0, position: "absolute", left: "50%", transform: "translateX(-50%)" }}>
+          {links.map((l, i) => (
+            <li key={l}><a href="#" style={{ fontSize: 14.5, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? PURPLE : INK, textDecoration: "none" }}>{l}</a></li>
           ))}
         </ul>
-        <div className="flex items-center" style={{ gap: 10 }}>
-          <a href="#" className="hidden sm:inline-flex" style={{ color: INK, fontSize: 15, fontWeight: 600, textDecoration: "none", padding: "10px 8px" }}>Log in</a>
-          <a href="#" className="pz-cta" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: PURPLE, color: "#fff", borderRadius: "30px 30px 30px 7px", padding: "11px 12px 11px 20px", fontSize: 14.5, fontWeight: 700, textDecoration: "none", boxShadow: "0 12px 24px -10px rgba(61,52,139,0.6)" }}>
-            Get started
-            <span className="pz-cta-ico" style={{ width: 26, height: 26, borderRadius: "50%", background: "rgba(255,255,255,0.22)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}><ArrowUpRight size={15} color="#fff" /></span>
-          </a>
-          <button aria-label="Open menu" className="inline-flex items-center justify-center lg:hidden" style={{ width: 42, height: 42, borderRadius: "var(--pz-radius-pill)", background: LAV, border: "none", color: PURPLE, cursor: "pointer" }}><Menu size={20} /></button>
-        </div>
+        <a href="#" style={{ background: PURPLE, color: "#fff", borderRadius: "var(--pz-radius-pill)", padding: "11px 24px", fontSize: 14.5, fontWeight: 600, textDecoration: "none" }}>Login</a>
+        <button aria-label="Open menu" className="inline-flex items-center justify-center lg:hidden" style={{ width: 42, height: 42, borderRadius: "var(--pz-radius-pill)", background: LAV, border: "none", color: PURPLE, cursor: "pointer", marginLeft: 8 }}><Menu size={20} /></button>
       </nav>
     </header>
   );
 }
 
-function Pill({ icon, label }: { icon: React.ReactNode; label: string }) {
+function Orbiter({ d, angle, duration, reduce, children }: { d: number; angle: number; duration: number; reduce: boolean; children: React.ReactNode }) {
+  const delay = `-${((duration * angle) / 360).toFixed(2)}s`;
   return (
-    <span style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "#fff", borderRadius: "var(--pz-radius-pill)", padding: "8px 16px", fontSize: 13.5, fontWeight: 700, color: INK, boxShadow: "0 10px 22px -12px rgba(120,70,10,0.45)" }}>
-      {icon} {label}
-    </span>
+    <div
+      className={reduce ? "" : "pz-orbit"}
+      style={{ position: "absolute", top: "50%", left: "50%", width: `${d}%`, height: `${d}%`, marginLeft: `-${d / 2}%`, marginTop: `-${d / 2}%`, borderRadius: "50%", transform: `rotate(${angle}deg)`, ...(reduce ? {} : { animation: `pzOrbit ${duration}s linear infinite`, animationDelay: delay }) }}
+    >
+      <div style={{ position: "absolute", top: 0, left: "50%", transform: "translate(-50%, -50%)" }}>
+        <div className={reduce ? "" : "pz-orbit-c"} style={{ transform: `rotate(${-angle}deg)`, ...(reduce ? {} : { animation: `pzOrbitR ${duration}s linear infinite`, animationDelay: delay }) }}>
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Pill({ children }: { children: React.ReactNode }) {
+  return <span style={{ display: "inline-block", background: "#fff", color: PURPLE, borderRadius: "var(--pz-radius-pill)", padding: "6px 14px", fontSize: 13, fontWeight: 700, boxShadow: "0 10px 22px -12px rgba(36,29,82,0.45)", whiteSpace: "nowrap" }}>{children}</span>;
+}
+
+function Dot({ children }: { children: React.ReactNode }) {
+  return <span style={{ display: "flex", width: 30, height: 30, borderRadius: "50%", background: AMBER, color: INK, alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 800, boxShadow: "0 10px 20px -8px rgba(255,184,77,0.85)" }}>{children}</span>;
+}
+
+function Solar({ reduce }: { reduce: boolean }) {
+  return (
+    <div className="pz-solar" style={{ position: "relative", width: "min(460px, 92%)", margin: "0 auto", aspectRatio: "1 / 1" }}>
+      {[96, 70, 44].map((d) => (
+        <span key={d} aria-hidden style={{ position: "absolute", top: "50%", left: "50%", width: `${d}%`, height: `${d}%`, transform: "translate(-50%, -50%)", borderRadius: "50%", border: "1.5px solid rgba(61,52,139,0.14)" }} />
+      ))}
+
+      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "27%", aspectRatio: "1 / 1", borderRadius: "50%", background: "linear-gradient(150deg, #6a5cf0, #241d52)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 60px -4px rgba(124,107,224,0.6), 0 22px 44px -16px rgba(36,29,82,0.6)", zIndex: 2 }}>
+        <span style={{ position: "relative", fontSize: "clamp(28px, 4.4vw, 46px)", fontWeight: 800, color: "#fff", lineHeight: 1 }}>
+          P
+          <span style={{ position: "absolute", top: "-8%", right: "-44%", width: 18, height: 18, borderRadius: "50%", background: AMBER, display: "flex", alignItems: "center", justifyContent: "center" }}><ArrowUpRight size={12} color={INK} /></span>
+        </span>
+      </div>
+
+      <Orbiter d={44} angle={205} duration={28} reduce={reduce}><Pill>Physics</Pill></Orbiter>
+      <Orbiter d={44} angle={312} duration={28} reduce={reduce}><Dot>?</Dot></Orbiter>
+
+      <Orbiter d={70} angle={22} duration={40} reduce={reduce}><Pill>Maths</Pill></Orbiter>
+      <Orbiter d={70} angle={108} duration={40} reduce={reduce}><Pill>NEET</Pill></Orbiter>
+      <Orbiter d={70} angle={322} duration={40} reduce={reduce}><Dot><Check size={15} strokeWidth={3} /></Dot></Orbiter>
+
+      <Orbiter d={96} angle={328} duration={54} reduce={reduce}><Pill>Biology</Pill></Orbiter>
+      <Orbiter d={96} angle={128} duration={54} reduce={reduce}><Pill>CBSE</Pill></Orbiter>
+      <Orbiter d={96} angle={212} duration={54} reduce={reduce}><Dot><Star size={14} fill={INK} /></Dot></Orbiter>
+    </div>
   );
 }
 
 export function HeroV10() {
   const reduce = usePrefersReducedMotion();
   return (
-    <div style={{ background: "#ffb84d" }}>
+    <div style={{ background: "linear-gradient(180deg, #fff6ea 0%, #ffe9cb 100%)" }}>
       <Nav />
-      <section style={{ position: "relative", overflow: "hidden", minHeight: "calc(100svh - 76px)", display: "flex", alignItems: "center", justifyContent: "center", padding: "clamp(36px, 6vh, 80px) 16px clamp(48px, 8vh, 96px)", background: "radial-gradient(125% 110% at 50% 0%, #ffe0ad 0%, #ffc266 45%, #ff9f43 100%)" }}>
-        {/* breathing light */}
-        <div className={reduce ? "" : "pz-aurora"} aria-hidden style={{ position: "absolute", inset: "-25%", background: "radial-gradient(40% 45% at 50% 18%, rgba(255,255,255,0.55), transparent 70%), radial-gradient(45% 50% at 18% 90%, rgba(255,150,80,0.5), transparent 70%), radial-gradient(45% 50% at 85% 85%, rgba(255,210,140,0.6), transparent 70%)", filter: "blur(40px)", pointerEvents: "none", zIndex: 0 }} />
-        {/* grain */}
-        <div aria-hidden style={{ position: "absolute", inset: 0, backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")", backgroundSize: "160px 160px", opacity: 0.06, mixBlendMode: "multiply", pointerEvents: "none", zIndex: 0 }} />
-
-        <div style={{ position: "relative", zIndex: 2, maxWidth: 840, margin: "0 auto", textAlign: "center" }}>
-          <div className={reduce ? "pz-pop" : "pz-pop pz-float"} style={{ display: "inline-flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
-            <Pill icon={<GraduationCap size={16} color={PURPLE} />} label="CBSE Classes 6-12" />
-            <Pill icon={<Stethoscope size={16} color={GREEN} />} label="NEET-UG" />
+      <section style={{ position: "relative", padding: "clamp(20px, 3vw, 40px) 16px clamp(36px, 5vw, 64px)" }}>
+        <div className="pz-v5-grid" style={{ alignItems: "center" }}>
+          <div>
+            <span className="pz-pop" style={{ display: "inline-flex", alignItems: "center", gap: 9, background: "#fff", border: "1px solid var(--pz-line)", borderRadius: "var(--pz-radius-pill)", padding: "7px 15px", fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: PURPLE }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: AMBER }} />
+              Personalised exam prep
+            </span>
+            <h1 className="pz-pop" style={{ fontSize: "clamp(38px, 5.6vw, 64px)", fontWeight: 800, lineHeight: 1.04, letterSpacing: "-0.03em", color: INK, margin: "20px 0 0" }}>
+              Your <RotatingWord words={ROT_WORDS} color={AMBER} />
+              <br />
+              Quiz Companion.
+            </h1>
+            <p className="pz-pop" style={{ fontSize: "clamp(15px, 1.6vw, 18px)", color: MUTED, lineHeight: 1.55, margin: "18px 0 0", maxWidth: 470 }}>
+              Adaptive quizzes, smart video lessons, and 24×7 doubt-solving. <strong style={{ color: INK, fontWeight: 600 }}>CBSE &amp; NEET today, more exams on the way.</strong>
+            </p>
+            <div className="pz-pop flex items-center" style={{ gap: 14, marginTop: 30, flexWrap: "wrap" }}>
+              <a href="#" className="pz-cta" style={{ display: "inline-flex", alignItems: "center", gap: 12, background: PURPLE, color: "#fff", borderRadius: "var(--pz-radius-pill)", padding: "15px 16px 15px 26px", fontWeight: 700, fontSize: 16, textDecoration: "none", boxShadow: "0 18px 32px -14px rgba(61,52,139,0.7)" }}>
+                Sign up free
+                <span className="pz-cta-ico" style={{ width: 30, height: 30, borderRadius: "50%", background: AMBER, display: "inline-flex", alignItems: "center", justifyContent: "center" }}><ArrowUpRight size={17} color={INK} /></span>
+              </a>
+              <a href="#experience" className="pz-cta" style={{ display: "inline-flex", alignItems: "center", gap: 9, background: "#fff", color: INK, border: "1px solid var(--pz-line)", borderRadius: "var(--pz-radius-pill)", padding: "14px 24px 14px 18px", fontWeight: 600, fontSize: 16, textDecoration: "none" }}>
+                <Play size={14} fill={PURPLE} color={PURPLE} /> Experience Prepzy
+              </a>
+            </div>
           </div>
 
-          <h1 className="pz-pop" style={{ fontSize: "clamp(40px, 7vw, 78px)", fontWeight: 800, lineHeight: 1.03, letterSpacing: "-0.03em", color: INK, margin: "22px 0 0" }}>
-            Your <RotatingWord words={ROT_WORDS} color={PURPLE} />
-            <br />
-            Learning Companion.
-          </h1>
-
-          <p className="pz-pop" style={{ fontSize: "clamp(16px, 1.8vw, 19px)", color: ORANGE_INK, fontWeight: 500, lineHeight: 1.5, margin: "18px auto 0", maxWidth: 500 }}>
-            Smart lessons, 24×7 doubt-solving and practice that actually sticks.
-          </p>
-
-          <div className="pz-pop flex items-center justify-center" style={{ gap: 14, marginTop: 30, flexWrap: "wrap" }}>
-            <a href="#" className="pz-cta" style={{ display: "inline-flex", alignItems: "center", gap: 10, background: PURPLE, color: "#fff", borderRadius: "var(--pz-radius-pill)", padding: "15px 16px 15px 28px", fontWeight: 700, fontSize: 16, textDecoration: "none", boxShadow: "0 20px 36px -14px rgba(61,52,139,0.6)" }}>
-              Get started for free
-              <span className="pz-cta-ico" style={{ width: 32, height: 32, borderRadius: "50%", background: "rgba(255,255,255,0.22)", display: "inline-flex", alignItems: "center", justifyContent: "center" }}><ArrowUpRight size={17} color="#fff" /></span>
-            </a>
-            <a href="#experience" className="pz-cta" style={{ display: "inline-flex", alignItems: "center", gap: 10, background: "#fff", color: INK, borderRadius: "var(--pz-radius-pill)", padding: "14px 24px 14px 15px", fontWeight: 600, fontSize: 16, textDecoration: "none", boxShadow: "0 16px 30px -16px rgba(120,70,10,0.4)" }}>
-              <span className="pz-cta-ico" style={{ width: 32, height: 32, borderRadius: "50%", background: LAV, display: "inline-flex", alignItems: "center", justifyContent: "center" }}><Play size={14} fill={PURPLE} color={PURPLE} style={{ marginLeft: 2 }} /></span>
-              Experience Prepzy
-            </a>
-          </div>
-
-          <div className="pz-pop" style={{ display: "inline-flex", alignItems: "center", gap: 9, marginTop: 24, color: ORANGE_INK, fontSize: 13.5, fontWeight: 600 }}>
-            <span style={{ display: "inline-flex", gap: 2 }}>{[0, 1, 2, 3, 4].map((i) => <Star key={i} size={14} fill={PURPLE} color={PURPLE} />)}</span>
-            Loved by 2,00,000+ learners across India
+          <div className="pz-pop">
+            <Solar reduce={reduce} />
           </div>
         </div>
 
-        {!reduce && (
-          <span style={{ position: "absolute", bottom: "4%", left: 0, right: 0, textAlign: "center", zIndex: 2, color: ORANGE_INK, fontSize: 12.5, fontWeight: 600, opacity: 0.7 }}>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 7 }}>Scroll to explore <ChevronDown size={15} /></span>
-          </span>
-        )}
+        <div className="pz-pop" style={{ maxWidth: 1080, margin: "clamp(24px, 4vw, 48px) auto 0", background: "#fff", borderRadius: "var(--pz-radius-tile)", boxShadow: "0 30px 60px -38px rgba(36,29,82,0.4)", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", padding: "clamp(18px, 2.4vw, 30px) 8px" }}>
+          {STATS.map((s, i) => (
+            <div key={s.label} style={{ textAlign: "center", borderLeft: i === 0 ? "none" : "1px solid var(--pz-line)", padding: "0 8px" }}>
+              <div style={{ fontSize: "clamp(26px, 3.4vw, 40px)", fontWeight: 800, color: INK, lineHeight: 1 }}>
+                <CountUp to={s.to} suffix={s.suffix} reduce={reduce} />
+              </div>
+              <div style={{ fontSize: "clamp(12px, 1.2vw, 14px)", color: MUTED, marginTop: 8 }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
       </section>
     </div>
   );
