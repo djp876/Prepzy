@@ -64,14 +64,14 @@ function CountUp({ to, suffix, reduce }: { to: number; suffix: string; reduce: b
    exam-coverage pills beneath. Scales as we add exams later. */
 function Solar({ reduce }: { reduce: boolean }) {
   return (
-    <div style={{ position: "relative", width: 160, height: 96, flex: "none" }}>
-      <svg viewBox="0 0 160 96" style={{ position: "absolute", inset: 0 }} aria-hidden>
+    <div style={{ position: "relative", width: 184, height: 112, flex: "none" }}>
+      <svg viewBox="0 0 184 112" style={{ position: "absolute", inset: 0 }} aria-hidden>
         <defs>
-          <path id="pzHeroOrbit" d="M14,42 a66,22 0 1,0 132,0 a66,22 0 1,0 -132,0" fill="none" />
+          <path id="pzHeroOrbit" d="M8,56 a84,40 0 1,0 168,0 a84,40 0 1,0 -168,0" fill="none" />
         </defs>
-        <g transform="rotate(-12 80 42)">
-          <ellipse cx="80" cy="42" rx="66" ry="22" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="1" />
-          <circle r="3.4" fill={AMBER} cx="146" cy="42">
+        <g transform="rotate(-10 92 56)">
+          <ellipse cx="92" cy="56" rx="84" ry="40" fill="none" stroke="rgba(255,255,255,0.26)" strokeWidth="1" />
+          <circle r="3.4" fill={AMBER} cx="176" cy="56">
             {!reduce && (
               <animateMotion dur="16s" repeatCount="indefinite">
                 <mpath href="#pzHeroOrbit" />
@@ -80,7 +80,7 @@ function Solar({ reduce }: { reduce: boolean }) {
           </circle>
         </g>
       </svg>
-      <div style={{ position: "absolute", top: 36, left: "50%", transform: "translateX(-50%)", display: "flex", gap: 6, zIndex: 2 }}>
+      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", display: "flex", gap: 6, zIndex: 2 }}>
         <span style={{ borderRadius: "var(--pz-radius-pill)", padding: "5px 11px", fontSize: 10.5, fontWeight: 700, whiteSpace: "nowrap", border: `1.5px solid ${AMBER}`, color: AMBER }}>
           CBSE 6-12
         </span>
