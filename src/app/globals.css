@@ -341,6 +341,19 @@ html.lenis body {
 @keyframes pzOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes pzOrbitR { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
 .pz-solar:hover .pz-orbit, .pz-solar:hover .pz-orbit-c { animation-play-state: paused; }
+
+/* HeroV10 responsive polish */
+@media (max-width: 860px) {
+  .pz-h10-cta { justify-content: center; }
+  .pz-h10-sub { margin-left: auto !important; margin-right: auto !important; }
+  .pz-h10-solar { margin-top: 38px; }
+  .pz-h10-solar .pz-solar { width: min(300px, 80vw) !important; }
+}
+@media (max-width: 560px) {
+  .pz-h10-stats { grid-template-columns: repeat(2, 1fr) !important; row-gap: 26px; }
+  .pz-h10-stats > div { border-left: none !important; padding-top: 4px; padding-bottom: 4px; }
+  .pz-h10-stats > div:nth-child(even) { border-left: 1px solid var(--pz-line) !important; }
+}
 .pz-dot { width: 7px; height: 7px; border-radius: 50%; background: #bdb4e0; display: inline-block; animation: pzDot 1s ease-in-out infinite; }
 .pz-bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 150px; gap: 16px; max-width: 1180px; margin: 0 auto; }
 .pz-bento > * { border-radius: 22px; }

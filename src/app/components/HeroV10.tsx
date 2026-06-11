@@ -108,8 +108,9 @@ function Solar({ reduce }: { reduce: boolean }) {
         <span key={d} aria-hidden style={{ position: "absolute", top: "50%", left: "50%", width: `${d}%`, height: `${d}%`, transform: "translate(-50%, -50%)", borderRadius: "50%", border: "1.5px solid rgba(61,52,139,0.14)" }} />
       ))}
 
-      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "30%", aspectRatio: "1 / 1", borderRadius: "26% 54% 26% 26%", background: "linear-gradient(150deg, #6a5cf0, #3a2f86)", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 60px -4px rgba(124,107,224,0.6), 0 22px 44px -16px rgba(36,29,82,0.6)", zIndex: 3 }}>
-        <span style={{ fontSize: "clamp(46px, 8vw, 82px)", fontWeight: 800, color: "#fff", lineHeight: 1 }}>P</span>
+      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "31%", aspectRatio: "1 / 1", borderRadius: "26% 54% 26% 26%", background: "linear-gradient(150deg, #6a5cf0, #3a2f86)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 60px -4px rgba(124,107,224,0.6), 0 22px 44px -16px rgba(36,29,82,0.6)", zIndex: 3 }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/prepzy-mark.png" alt="Prepzy" style={{ width: "60%", height: "auto", display: "block" }} />
       </div>
 
       {/* inner ring: small accent dots only (clear of the core) */}
@@ -134,7 +135,7 @@ export function HeroV10() {
   return (
     <div style={{ background: "linear-gradient(180deg, #fff6ea 0%, #ffe9cb 100%)" }}>
       <Nav />
-      <section style={{ position: "relative", padding: "clamp(20px, 3vw, 40px) 16px clamp(36px, 5vw, 64px)" }}>
+      <section style={{ position: "relative", overflowX: "clip", padding: "clamp(20px, 3vw, 40px) 16px clamp(36px, 5vw, 64px)" }}>
         <div className="pz-v5-grid" style={{ alignItems: "center" }}>
           <div>
             <span className="pz-pop" style={{ display: "inline-flex", alignItems: "center", gap: 9, background: "#fff", border: "1px solid var(--pz-line)", borderRadius: "var(--pz-radius-pill)", padding: "7px 15px", fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: PURPLE }}>
@@ -146,10 +147,10 @@ export function HeroV10() {
               <br />
               Learning Companion.
             </h1>
-            <p className="pz-pop" style={{ fontSize: "clamp(15px, 1.6vw, 18px)", color: MUTED, lineHeight: 1.55, margin: "18px 0 0", maxWidth: 470 }}>
+            <p className="pz-pop pz-h10-sub" style={{ fontSize: "clamp(15px, 1.6vw, 18px)", color: MUTED, lineHeight: 1.55, margin: "18px 0 0", maxWidth: 470 }}>
               Adaptive quizzes, smart video lessons, and 24×7 doubt-solving. <strong style={{ color: INK, fontWeight: 600 }}>CBSE &amp; NEET today, more exams on the way.</strong>
             </p>
-            <div className="pz-pop flex items-center" style={{ gap: 14, marginTop: 30, flexWrap: "wrap" }}>
+            <div className="pz-pop pz-h10-cta flex items-center" style={{ gap: 14, marginTop: 30, flexWrap: "wrap" }}>
               <a href="#" className="pz-cta" style={{ display: "inline-flex", alignItems: "center", gap: 12, background: PURPLE, color: "#fff", borderRadius: "var(--pz-radius-pill)", padding: "15px 16px 15px 26px", fontWeight: 700, fontSize: 16, textDecoration: "none", boxShadow: "0 18px 32px -14px rgba(61,52,139,0.7)" }}>
                 Sign up free
                 <span className="pz-cta-ico" style={{ width: 30, height: 30, borderRadius: "50%", background: AMBER, display: "inline-flex", alignItems: "center", justifyContent: "center" }}><ArrowUpRight size={17} color={INK} /></span>
@@ -160,12 +161,12 @@ export function HeroV10() {
             </div>
           </div>
 
-          <div className="pz-pop">
+          <div className="pz-pop pz-h10-solar">
             <Solar reduce={reduce} />
           </div>
         </div>
 
-        <div className="pz-pop" style={{ maxWidth: 1080, margin: "clamp(24px, 4vw, 48px) auto 0", background: "#fff", borderRadius: "var(--pz-radius-tile)", boxShadow: "0 30px 60px -38px rgba(36,29,82,0.4)", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", padding: "clamp(18px, 2.4vw, 30px) 8px" }}>
+        <div className="pz-pop pz-h10-stats" style={{ maxWidth: 1080, margin: "clamp(24px, 4vw, 48px) auto 0", background: "#fff", borderRadius: "var(--pz-radius-tile)", boxShadow: "0 30px 60px -38px rgba(36,29,82,0.4)", display: "grid", gridTemplateColumns: "repeat(4, 1fr)", padding: "clamp(18px, 2.4vw, 30px) 8px" }}>
           {STATS.map((s, i) => (
             <div key={s.label} style={{ textAlign: "center", borderLeft: i === 0 ? "none" : "1px solid var(--pz-line)", padding: "0 8px" }}>
               <div style={{ fontSize: "clamp(26px, 3.4vw, 40px)", fontWeight: 800, color: INK, lineHeight: 1 }}>
