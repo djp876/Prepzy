@@ -338,8 +338,8 @@ html.lenis body {
   100% { transform: scale(1.14) translate(2%, -1.5%); opacity: 1; }
 }
 .pz-aurora { animation: pzAurora 16s ease-in-out infinite alternate; will-change: transform, opacity; }
-@keyframes pzOrbit { to { transform: rotate(360deg); } }
-@keyframes pzOrbitR { to { transform: rotate(-360deg); } }
+@keyframes pzOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes pzOrbitR { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
 .pz-solar:hover .pz-orbit, .pz-solar:hover .pz-orbit-c { animation-play-state: paused; }
 .pz-dot { width: 7px; height: 7px; border-radius: 50%; background: #bdb4e0; display: inline-block; animation: pzDot 1s ease-in-out infinite; }
 .pz-bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 150px; gap: 16px; max-width: 1180px; margin: 0 auto; }

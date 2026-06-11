@@ -82,10 +82,10 @@ function Orbiter({ d, angle, duration, reduce, children }: { d: number; angle: n
   return (
     <div
       className={reduce ? "" : "pz-orbit"}
-      style={{ position: "absolute", top: "50%", left: "50%", width: `${d}%`, height: `${d}%`, marginLeft: `-${d / 2}%`, marginTop: `-${d / 2}%`, borderRadius: "50%", transform: `rotate(${angle}deg)`, ...(reduce ? {} : { animation: `pzOrbit ${duration}s linear infinite`, animationDelay: delay }) }}
+      style={{ position: "absolute", top: "50%", left: "50%", width: `${d}%`, height: `${d}%`, marginLeft: `-${d / 2}%`, marginTop: `-${d / 2}%`, borderRadius: "50%", ...(reduce ? { transform: `rotate(${angle}deg)` } : { animation: `pzOrbit ${duration}s linear infinite`, animationDelay: delay }) }}
     >
       <div style={{ position: "absolute", top: 0, left: "50%", transform: "translate(-50%, -50%)" }}>
-        <div className={reduce ? "" : "pz-orbit-c"} style={{ transform: `rotate(${-angle}deg)`, ...(reduce ? {} : { animation: `pzOrbitR ${duration}s linear infinite`, animationDelay: delay }) }}>
+        <div className={reduce ? "" : "pz-orbit-c"} style={{ ...(reduce ? { transform: `rotate(${-angle}deg)` } : { animation: `pzOrbitR ${duration}s linear infinite`, animationDelay: delay }) }}>
           {children}
         </div>
       </div>
