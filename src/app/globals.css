@@ -354,6 +354,47 @@ html.lenis body {
   .pz-h10-stats > div { border-left: none !important; padding-top: 4px; padding-bottom: 4px; }
   .pz-h10-stats > div:nth-child(even) { border-left: 1px solid var(--pz-line) !important; }
 }
+
+/* HeroV11 — orbit emblem + split layout */
+.pz-planet {
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  offset-rotate: 0deg;
+  offset-anchor: 50% 50%;
+  animation-name: pzOffset;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: offset-distance;
+}
+@keyframes pzOffset { from { offset-distance: 0%; } to { offset-distance: 100%; } }
+
+.pz-exp, .pz-compass { transition: transform var(--pz-dur) var(--pz-ease-out), box-shadow var(--pz-dur) var(--pz-ease-out); }
+.pz-exp:hover { transform: translateY(-2px); }
+.pz-compass:hover { transform: translateY(-2px) rotate(-12deg); }
+
+.pz-v11-grid {
+  display: grid;
+  grid-template-columns: 1.16fr 0.84fr;
+  gap: 18px;
+  align-items: stretch;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+.pz-v11-photo { min-height: 100%; }
+
+@media (max-width: 980px) {
+  .pz-v11-grid { grid-template-columns: 1fr; }
+  .pz-v11-photo { min-height: 320px; max-height: 440px; }
+}
+@media (max-width: 620px) {
+  .pz-v11-emblem { transform: scale(0.82); transform-origin: top right; }
+}
+@media (max-width: 460px) {
+  .pz-v11-stats { grid-template-columns: repeat(2, 1fr) !important; row-gap: 20px; }
+  .pz-v11-emblem { transform: scale(0.68); transform-origin: top right; }
+}
 .pz-dot { width: 7px; height: 7px; border-radius: 50%; background: #bdb4e0; display: inline-block; animation: pzDot 1s ease-in-out infinite; }
 .pz-bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 150px; gap: 16px; max-width: 1180px; margin: 0 auto; }
 .pz-bento > * { border-radius: 22px; }
