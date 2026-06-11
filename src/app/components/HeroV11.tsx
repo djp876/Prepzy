@@ -182,16 +182,16 @@ export function HeroV11() {
                 </div>
               </div>
 
-              <h1 style={{ position: "relative", fontSize: "clamp(34px, 4.3vw, 54px)", fontWeight: 800, lineHeight: 1.05, letterSpacing: "-0.025em", margin: "10px 0 0", maxWidth: "78%" }}>
+              <h1 style={{ position: "relative", fontSize: "clamp(34px, 4.3vw, 54px)", fontWeight: 800, lineHeight: 1.05, letterSpacing: "-0.025em", margin: "10px 0 0", maxWidth: "100%" }}>
                 Your <RotatingWord words={ROT_WORDS} color={AMBER} />
                 <br />
                 Learning Companion.
               </h1>
 
-              <p style={{ fontSize: "clamp(13.5px, 1.35vw, 15.5px)", lineHeight: 1.7, color: "rgba(255,255,255,0.82)", margin: "18px 0 0", maxWidth: 520 }}>
+              <p style={{ display: "flex", flexWrap: "wrap", alignItems: "center", rowGap: 6, fontSize: "clamp(13.5px, 1.35vw, 15.5px)", lineHeight: 1.5, color: "rgba(255,255,255,0.82)", margin: "18px 0 0", maxWidth: 540 }}>
                 {FEATURES.map((f, i) => (
-                  <span key={f} style={{ whiteSpace: "nowrap" }}>
-                    {i > 0 && <span style={{ color: AMBER, margin: "0 9px" }}>&bull;</span>}
+                  <span key={f} style={{ display: "inline-flex", alignItems: "center", whiteSpace: "nowrap" }}>
+                    {i > 0 && <span style={{ color: AMBER, margin: "0 10px" }}>&bull;</span>}
                     {f}
                   </span>
                 ))}
