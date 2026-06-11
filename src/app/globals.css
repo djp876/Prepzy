@@ -370,16 +370,39 @@ html.lenis body {
 }
 @keyframes pzOffset { from { offset-distance: 0%; } to { offset-distance: 100%; } }
 
-.pz-exp, .pz-compass { transition: transform var(--pz-dur) var(--pz-ease-out), box-shadow var(--pz-dur) var(--pz-ease-out); }
+.pz-exp, .pz-compass { transition: transform 200ms cubic-bezier(0.23,1,0.32,1), box-shadow 200ms cubic-bezier(0.23,1,0.32,1); }
 .pz-exp:hover { transform: translateY(-2px); }
 .pz-compass:hover { transform: translateY(-2px) rotate(-12deg); }
+.pz-exp:active, .pz-compass:active { transform: scale(0.97); }
+
+/* scroll cue */
+.pz-scrollcue {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+  margin: clamp(18px, 2.4vw, 30px) auto 0;
+  color: #9a8f7c;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 200ms cubic-bezier(0.23,1,0.32,1);
+}
+.pz-scrollcue:hover { color: #6b6391; }
+.pz-scrollcue-ico { animation: pzNudge 1.6s ease-in-out infinite; }
+@keyframes pzNudge {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(4px); opacity: 1; }
+}
 
 .pz-v11-grid {
   display: grid;
-  grid-template-columns: 1.16fr 0.84fr;
-  gap: 18px;
+  grid-template-columns: 1.18fr 0.82fr;
+  gap: 20px;
   align-items: stretch;
-  max-width: 1180px;
+  max-width: 1340px;
   margin: 0 auto;
 }
 .pz-v11-photo { min-height: 100%; }
