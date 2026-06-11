@@ -108,9 +108,8 @@ function Solar({ reduce }: { reduce: boolean }) {
         <span key={d} aria-hidden style={{ position: "absolute", top: "50%", left: "50%", width: `${d}%`, height: `${d}%`, transform: "translate(-50%, -50%)", borderRadius: "50%", border: "1.5px solid rgba(61,52,139,0.14)" }} />
       ))}
 
-      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "30%", aspectRatio: "1 / 1", borderRadius: "26% 54% 26% 26%", background: "linear-gradient(150deg, #6a5cf0, #3a2f86)", overflow: "hidden", boxShadow: "0 0 60px -4px rgba(124,107,224,0.6), 0 22px 44px -16px rgba(36,29,82,0.6)", zIndex: 3 }}>
-        <span style={{ position: "absolute", left: "12%", bottom: "0%", fontSize: "clamp(42px, 7.5vw, 78px)", fontWeight: 800, color: "#fff", lineHeight: 1 }}>P</span>
-        <span style={{ position: "absolute", top: "27%", left: "43%", width: "33%", aspectRatio: "1 / 1", borderRadius: "50%", background: AMBER, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 16px -5px rgba(36,29,82,0.45)" }}><ArrowUpRight size={20} color={INK} strokeWidth={2.6} /></span>
+      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "30%", aspectRatio: "1 / 1", borderRadius: "26% 54% 26% 26%", background: "linear-gradient(150deg, #6a5cf0, #3a2f86)", overflow: "hidden", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 60px -4px rgba(124,107,224,0.6), 0 22px 44px -16px rgba(36,29,82,0.6)", zIndex: 3 }}>
+        <span style={{ fontSize: "clamp(46px, 8vw, 82px)", fontWeight: 800, color: "#fff", lineHeight: 1 }}>P</span>
       </div>
 
       {/* inner ring: small accent dots only (clear of the core) */}
@@ -124,7 +123,7 @@ function Solar({ reduce }: { reduce: boolean }) {
       {/* outer ring: three subjects + a star, evenly spaced */}
       <Orbiter d={90} angle={20} duration={62} reduce={reduce}><Pill>Biology</Pill></Orbiter>
       <Orbiter d={90} angle={110} duration={62} reduce={reduce}><Pill>Maths</Pill></Orbiter>
-      <Orbiter d={90} angle={200} duration={62} reduce={reduce}><Pill>CBSE</Pill></Orbiter>
+      <Orbiter d={90} angle={200} duration={62} reduce={reduce}><Pill>CBSE 6-12</Pill></Orbiter>
       <Orbiter d={90} angle={290} duration={62} reduce={reduce}><Dot><Star size={14} fill={INK} /></Dot></Orbiter>
     </div>
   );
@@ -140,7 +139,7 @@ export function HeroV10() {
           <div>
             <span className="pz-pop" style={{ display: "inline-flex", alignItems: "center", gap: 9, background: "#fff", border: "1px solid var(--pz-line)", borderRadius: "var(--pz-radius-pill)", padding: "7px 15px", fontSize: 12, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: PURPLE }}>
               <span style={{ width: 8, height: 8, borderRadius: "50%", background: AMBER }} />
-              Personalised exam prep
+              Watch Less. Practice More. Score Higher.
             </span>
             <h1 className="pz-pop" style={{ fontSize: "clamp(38px, 5.6vw, 64px)", fontWeight: 800, lineHeight: 1.04, letterSpacing: "-0.03em", color: INK, margin: "20px 0 0" }}>
               Your <RotatingWord words={ROT_WORDS} color={AMBER} />
