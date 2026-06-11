@@ -127,19 +127,19 @@ function Pill({ active, children }: { active: boolean; children: React.ReactNode
 
 /** Interactive orbit: the orange planet revolves through both pills and lights the one it is nearest. */
 function OrbitExam({ reduce }: { reduce: boolean }) {
-  const W = 430;
-  const H = 232;
-  const cx = 215;
-  const cy = 116;
+  const W = 460;
+  const H = 176;
+  const cx = 230;
+  const cy = 84;
   const [active, setActive] = useState<"cbse" | "neet">("neet");
   const planetRef = useRef<HTMLSpanElement>(null);
 
   // rings (all centered) — the orange planet rides ring 0
   const rings: ReadonlyArray<{ rx: number; ry: number; deg: number; op: number; w: number }> = [
-    { rx: 162, ry: 58, deg: -13, op: 0.55, w: 1.5 },
-    { rx: 138, ry: 86, deg: 22, op: 0.3, w: 1.3 },
-    { rx: 184, ry: 70, deg: -30, op: 0.26, w: 1.3 },
-    { rx: 108, ry: 40, deg: 6, op: 0.34, w: 1.2 },
+    { rx: 170, ry: 48, deg: -11, op: 0.55, w: 1.5 },
+    { rx: 146, ry: 60, deg: 18, op: 0.3, w: 1.3 },
+    { rx: 180, ry: 50, deg: -24, op: 0.24, w: 1.3 },
+    { rx: 112, ry: 38, deg: 6, op: 0.34, w: 1.2 },
   ];
   const paths = rings.map((r) => ellipsePath(cx, cy, r.rx, r.ry, r.deg));
 
@@ -229,8 +229,8 @@ export function HeroV11() {
           <div style={{ display: "flex", flexDirection: "column", gap: 16, minWidth: 0 }}>
             <div className="pz-pop" style={{ position: "relative", overflow: "hidden", background: "linear-gradient(155deg, #483ea0 0%, #332a7c 58%, #2b2468 100%)", borderRadius: 32, padding: "clamp(28px, 3vw, 46px)", color: "#fff", flex: 1 }}>
               {/* top row: tagline + interactive orbit */}
-              <div style={{ position: "relative", minHeight: 128 }}>
-                <span style={{ display: "block", fontSize: 14.5, fontWeight: 600, color: "rgba(255,255,255,0.9)", maxWidth: 280 }}>
+              <div style={{ position: "relative", minHeight: 168 }}>
+                <span style={{ display: "block", fontSize: 14.5, fontWeight: 600, color: "rgba(255,255,255,0.9)", maxWidth: 250 }}>
                   Watch Less. Practice More. Score Higher.
                 </span>
                 <OrbitExam reduce={reduce} />
