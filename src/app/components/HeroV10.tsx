@@ -103,28 +103,31 @@ function Dot({ children }: { children: React.ReactNode }) {
 
 function Solar({ reduce }: { reduce: boolean }) {
   return (
-    <div className="pz-solar" style={{ position: "relative", width: "min(460px, 92%)", margin: "0 auto", aspectRatio: "1 / 1" }}>
-      {[96, 70, 44].map((d) => (
+    <div className="pz-solar" style={{ position: "relative", width: "min(440px, 92%)", margin: "0 auto", aspectRatio: "1 / 1" }}>
+      {[90, 66, 42].map((d) => (
         <span key={d} aria-hidden style={{ position: "absolute", top: "50%", left: "50%", width: `${d}%`, height: `${d}%`, transform: "translate(-50%, -50%)", borderRadius: "50%", border: "1.5px solid rgba(61,52,139,0.14)" }} />
       ))}
 
-      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "27%", aspectRatio: "1 / 1", borderRadius: "50%", background: "linear-gradient(150deg, #6a5cf0, #241d52)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 60px -4px rgba(124,107,224,0.6), 0 22px 44px -16px rgba(36,29,82,0.6)", zIndex: 2 }}>
-        <span style={{ position: "relative", fontSize: "clamp(28px, 4.4vw, 46px)", fontWeight: 800, color: "#fff", lineHeight: 1 }}>
+      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "23%", aspectRatio: "1 / 1", borderRadius: "50%", background: "linear-gradient(150deg, #6a5cf0, #241d52)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 60px -4px rgba(124,107,224,0.6), 0 22px 44px -16px rgba(36,29,82,0.6)", zIndex: 3 }}>
+        <span style={{ position: "relative", fontSize: "clamp(26px, 4vw, 42px)", fontWeight: 800, color: "#fff", lineHeight: 1 }}>
           P
-          <span style={{ position: "absolute", top: "-8%", right: "-44%", width: 18, height: 18, borderRadius: "50%", background: AMBER, display: "flex", alignItems: "center", justifyContent: "center" }}><ArrowUpRight size={12} color={INK} /></span>
+          <span style={{ position: "absolute", top: "-10%", right: "-46%", width: 18, height: 18, borderRadius: "50%", background: AMBER, display: "flex", alignItems: "center", justifyContent: "center" }}><ArrowUpRight size={12} color={INK} /></span>
         </span>
       </div>
 
-      <Orbiter d={44} angle={205} duration={28} reduce={reduce}><Pill>Physics</Pill></Orbiter>
-      <Orbiter d={44} angle={312} duration={28} reduce={reduce}><Dot>?</Dot></Orbiter>
+      {/* inner ring: small accent dots only (clear of the core) */}
+      <Orbiter d={42} angle={135} duration={30} reduce={reduce}><Dot>?</Dot></Orbiter>
+      <Orbiter d={42} angle={315} duration={30} reduce={reduce}><Dot><Check size={15} strokeWidth={3} /></Dot></Orbiter>
 
-      <Orbiter d={70} angle={22} duration={40} reduce={reduce}><Pill>Maths</Pill></Orbiter>
-      <Orbiter d={70} angle={108} duration={40} reduce={reduce}><Pill>NEET</Pill></Orbiter>
-      <Orbiter d={70} angle={322} duration={40} reduce={reduce}><Dot><Check size={15} strokeWidth={3} /></Dot></Orbiter>
+      {/* mid ring: two subjects, opposite each other */}
+      <Orbiter d={66} angle={55} duration={46} reduce={reduce}><Pill>Physics</Pill></Orbiter>
+      <Orbiter d={66} angle={235} duration={46} reduce={reduce}><Pill>NEET</Pill></Orbiter>
 
-      <Orbiter d={96} angle={328} duration={54} reduce={reduce}><Pill>Biology</Pill></Orbiter>
-      <Orbiter d={96} angle={128} duration={54} reduce={reduce}><Pill>CBSE</Pill></Orbiter>
-      <Orbiter d={96} angle={212} duration={54} reduce={reduce}><Dot><Star size={14} fill={INK} /></Dot></Orbiter>
+      {/* outer ring: three subjects + a star, evenly spaced */}
+      <Orbiter d={90} angle={20} duration={62} reduce={reduce}><Pill>Biology</Pill></Orbiter>
+      <Orbiter d={90} angle={110} duration={62} reduce={reduce}><Pill>Maths</Pill></Orbiter>
+      <Orbiter d={90} angle={200} duration={62} reduce={reduce}><Pill>CBSE</Pill></Orbiter>
+      <Orbiter d={90} angle={290} duration={62} reduce={reduce}><Dot><Star size={14} fill={INK} /></Dot></Orbiter>
     </div>
   );
 }
