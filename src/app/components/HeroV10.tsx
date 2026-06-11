@@ -108,11 +108,9 @@ function Solar({ reduce }: { reduce: boolean }) {
         <span key={d} aria-hidden style={{ position: "absolute", top: "50%", left: "50%", width: `${d}%`, height: `${d}%`, transform: "translate(-50%, -50%)", borderRadius: "50%", border: "1.5px solid rgba(61,52,139,0.14)" }} />
       ))}
 
-      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "23%", aspectRatio: "1 / 1", borderRadius: "50%", background: "linear-gradient(150deg, #6a5cf0, #241d52)", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 60px -4px rgba(124,107,224,0.6), 0 22px 44px -16px rgba(36,29,82,0.6)", zIndex: 3 }}>
-        <span style={{ position: "relative", fontSize: "clamp(26px, 4vw, 42px)", fontWeight: 800, color: "#fff", lineHeight: 1 }}>
-          P
-          <span style={{ position: "absolute", top: "-10%", right: "-46%", width: 18, height: 18, borderRadius: "50%", background: AMBER, display: "flex", alignItems: "center", justifyContent: "center" }}><ArrowUpRight size={12} color={INK} /></span>
-        </span>
+      <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "30%", aspectRatio: "1 / 1", borderRadius: "26% 54% 26% 26%", background: "linear-gradient(150deg, #6a5cf0, #3a2f86)", overflow: "hidden", boxShadow: "0 0 60px -4px rgba(124,107,224,0.6), 0 22px 44px -16px rgba(36,29,82,0.6)", zIndex: 3 }}>
+        <span style={{ position: "absolute", left: "12%", bottom: "0%", fontSize: "clamp(42px, 7.5vw, 78px)", fontWeight: 800, color: "#fff", lineHeight: 1 }}>P</span>
+        <span style={{ position: "absolute", top: "27%", left: "43%", width: "33%", aspectRatio: "1 / 1", borderRadius: "50%", background: AMBER, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 16px -5px rgba(36,29,82,0.45)" }}><ArrowUpRight size={20} color={INK} strokeWidth={2.6} /></span>
       </div>
 
       {/* inner ring: small accent dots only (clear of the core) */}
@@ -147,7 +145,7 @@ export function HeroV10() {
             <h1 className="pz-pop" style={{ fontSize: "clamp(38px, 5.6vw, 64px)", fontWeight: 800, lineHeight: 1.04, letterSpacing: "-0.03em", color: INK, margin: "20px 0 0" }}>
               Your <RotatingWord words={ROT_WORDS} color={AMBER} />
               <br />
-              Quiz Companion.
+              Learning Companion.
             </h1>
             <p className="pz-pop" style={{ fontSize: "clamp(15px, 1.6vw, 18px)", color: MUTED, lineHeight: 1.55, margin: "18px 0 0", maxWidth: 470 }}>
               Adaptive quizzes, smart video lessons, and 24×7 doubt-solving. <strong style={{ color: INK, fontWeight: 600 }}>CBSE &amp; NEET today, more exams on the way.</strong>
