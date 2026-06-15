@@ -574,3 +574,33 @@ html.lenis body {
   .pz13-roll-track { transition: none; }
   .pz13-aurora { animation: none; }
 }
+
+/* ===== v13 hero background: drifting blobs + floating motifs ===== */
+.pz13-bg { transform: translate3d(var(--mx, 0px), var(--my, 0px), 0); will-change: transform; }
+.pz13-blob { position: absolute; border-radius: 50%; filter: blur(46px); }
+.pz13-blob-1 { width: 520px; height: 520px; left: -60px; top: -50px; background: radial-gradient(circle, rgba(124,107,224,0.55), transparent 70%); animation: pz13Float1 19s ease-in-out infinite; }
+.pz13-blob-2 { width: 600px; height: 600px; right: -90px; top: -70px; background: radial-gradient(circle, rgba(255,184,77,0.62), transparent 70%); animation: pz13Float2 23s ease-in-out infinite; }
+.pz13-blob-3 { width: 560px; height: 560px; right: 4%; bottom: -140px; background: radial-gradient(circle, rgba(255,138,92,0.50), transparent 70%); animation: pz13Float3 21s ease-in-out infinite; }
+.pz13-blob-4 { width: 460px; height: 460px; left: -40px; bottom: -90px; background: radial-gradient(circle, rgba(255,206,140,0.55), transparent 70%); animation: pz13Float4 26s ease-in-out infinite; }
+@keyframes pz13Float1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(70px, 46px) scale(1.12); } }
+@keyframes pz13Float2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-56px, 54px) scale(1.10); } }
+@keyframes pz13Float3 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-44px, -54px) scale(1.14); } }
+@keyframes pz13Float4 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(54px, -32px) scale(1.08); } }
+.pz13-orb, .pz13-ring { position: absolute; }
+.pz13-orb { border-radius: 50%; }
+.pz13-orb-1 { width: 14px; height: 14px; background: #3d348b; opacity: 0.22; left: 15%; top: 30%; animation: pz13Bob 9s ease-in-out infinite; }
+.pz13-orb-2 { width: 10px; height: 10px; background: #d97706; opacity: 0.32; right: 17%; top: 36%; animation: pz13Bob 11s ease-in-out infinite 1s; }
+.pz13-ring { border-radius: 50%; border: 2px solid; }
+.pz13-ring-1 { width: 62px; height: 62px; border-color: rgba(61,52,139,0.16); left: 11%; bottom: 22%; animation: pz13Bob 13s ease-in-out infinite; }
+.pz13-ring-2 { width: 40px; height: 40px; border-color: rgba(217,119,6,0.22); right: 13%; bottom: 26%; animation: pz13Bob 10s ease-in-out infinite 0.5s; }
+@keyframes pz13Bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-22px); } }
+.pz13-grain { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 160px 160px; opacity: 0.05; mix-blend-mode: multiply; }
+
+/* hide nested carousel scrollbars (kept scrollable) — fixes the "second scrollbar" */
+.pz-xrail::-webkit-scrollbar, .pz13-tcarousel::-webkit-scrollbar { display: none; }
+.pz-xrail, .pz13-tcarousel { scrollbar-width: none; -ms-overflow-style: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pz13-blob, .pz13-orb, .pz13-ring { animation: none; }
+  .pz13-bg { transform: none !important; }
+}

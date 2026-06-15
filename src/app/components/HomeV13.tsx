@@ -207,7 +207,7 @@ function Nav() {
   );
 }
 
-/* ---------------- interactive aurora (drifts on its own + cursor) ---------------- */
+/* ---------------- animated hero background (drifting blobs + motifs + cursor parallax) ---------------- */
 function InteractiveBg() {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
@@ -217,13 +217,13 @@ function InteractiveBg() {
     if (!el) return;
     let raf = 0, tx = 0, ty = 0, cx = 0, cy = 0;
     const onMove = (e: MouseEvent) => {
-      tx = (e.clientX / window.innerWidth - 0.5) * 64;
-      ty = (e.clientY / window.innerHeight - 0.5) * 64;
+      tx = (e.clientX / window.innerWidth - 0.5) * 50;
+      ty = (e.clientY / window.innerHeight - 0.5) * 50;
     };
     const tick = () => {
-      cx += (tx - cx) * 0.05; cy += (ty - cy) * 0.05;
-      el.style.setProperty("--ax", `${cx.toFixed(1)}px`);
-      el.style.setProperty("--ay", `${cy.toFixed(1)}px`);
+      cx += (tx - cx) * 0.06; cy += (ty - cy) * 0.06;
+      el.style.setProperty("--mx", `${cx.toFixed(1)}px`);
+      el.style.setProperty("--my", `${cy.toFixed(1)}px`);
       raf = requestAnimationFrame(tick);
     };
     window.addEventListener("mousemove", onMove);
@@ -231,17 +231,18 @@ function InteractiveBg() {
     return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(raf); };
   }, [reduce]);
   return (
-    <div ref={ref} aria-hidden style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
-      <div
-        className="pz-aurora pz13-aurora"
-        style={{
-          position: "absolute", inset: "-25%",
-          background:
-            "radial-gradient(40% 50% at calc(20% + var(--ax, 0px)) calc(20% + var(--ay, 0px)), rgba(124,107,224,0.16), transparent 70%), radial-gradient(46% 56% at calc(82% + var(--ax, 0px)) calc(22% - var(--ay, 0px)), rgba(255,176,59,0.50), transparent 70%), radial-gradient(50% 60% at calc(78% - var(--ax, 0px)) calc(84% + var(--ay, 0px)), rgba(255,138,92,0.34), transparent 70%), radial-gradient(46% 56% at calc(16% - var(--ax, 0px)) calc(80% - var(--ay, 0px)), rgba(255,206,140,0.40), transparent 72%)",
-          filter: "blur(48px)",
-        }}
-      />
-      <div style={{ position: "absolute", inset: 0, backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")", backgroundSize: "160px 160px", opacity: 0.05, mixBlendMode: "multiply" }} />
+    <div aria-hidden style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
+      <div ref={ref} className="pz13-bg" style={{ position: "absolute", inset: 0 }}>
+        <span className="pz13-blob pz13-blob-1" />
+        <span className="pz13-blob pz13-blob-2" />
+        <span className="pz13-blob pz13-blob-3" />
+        <span className="pz13-blob pz13-blob-4" />
+        <span className="pz13-orb pz13-orb-1" />
+        <span className="pz13-orb pz13-orb-2" />
+        <span className="pz13-ring pz13-ring-1" />
+        <span className="pz13-ring pz13-ring-2" />
+      </div>
+      <div className="pz13-grain" />
     </div>
   );
 }
@@ -521,7 +522,7 @@ function Testimonials() {
         <Item><H2>Real wins, every day.</H2></Item>
         <Item><p style={{ color: MUTED, fontSize: 14.5, marginTop: 10 }}>Drag to explore →</p></Item>
       </Reveal>
-      <div ref={viewportRef} style={{ overflowX: reduce ? "auto" : "hidden", padding: "8px 16px 16px", cursor: reduce ? "auto" : "grab", WebkitOverflowScrolling: "touch" }}>
+      <div ref={viewportRef} className="pz13-tcarousel" style={{ overflowX: reduce ? "auto" : "hidden", overflowY: "hidden", padding: "8px 16px 16px", cursor: reduce ? "auto" : "grab", WebkitOverflowScrolling: "touch" }}>
         <motion.div
           ref={trackRef}
           drag={reduce ? false : "x"}
