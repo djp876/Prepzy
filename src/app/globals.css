@@ -545,3 +545,32 @@ html.lenis body {
   }
   .pz-rv { opacity: 1; transform: none; }
 }
+
+/* ===== v13 prototype: interaction layer ===== */
+.pz13-mask { display: block; overflow: hidden; }
+.pz13-line { display: block; padding-bottom: 0.08em; }
+.pz13-roll { position: relative; display: inline-block; overflow: hidden; line-height: 1.05; }
+.pz13-roll-track { display: block; transition: transform 0.34s var(--pz-ease-out); }
+.pz13-roll-b { display: block; position: absolute; left: 0; right: 0; top: 100%; }
+.pz13-cta:hover .pz13-roll-track { transform: translateY(-100%); }
+.pz13-navlink { position: relative; }
+.pz13-navlink::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px;
+  background: currentColor; transform: scaleX(0); transform-origin: left;
+  transition: transform 0.25s var(--pz-ease-out);
+}
+.pz13-navlink:hover::after, .pz13-navlink:focus-visible::after { transform: scaleX(1); }
+.pz13-marqmask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.pz13-marq-rev { animation-direction: reverse; animation-duration: 34s; }
+@keyframes pz13Aurora {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(0, -3%, 0) scale(1.06); }
+}
+.pz13-aurora { animation: pz13Aurora 18s var(--pz-ease-in-out) infinite alternate; }
+@media (prefers-reduced-motion: reduce) {
+  .pz13-roll-track { transition: none; }
+  .pz13-aurora { animation: none; }
+}
