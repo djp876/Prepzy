@@ -604,3 +604,204 @@ html.lenis body {
   .pz13-blob, .pz13-orb, .pz13-ring { animation: none; }
   .pz13-bg { transform: none !important; }
 }
+
+/* =======================================================================
+   v14 — "Warm Editorial × Kinetic", GSAP-driven. Fully scoped (pz14-*).
+   Hero entrance is pure CSS-on-mount (bulletproof, never invisible);
+   GSAP owns scroll set-pieces, count-ups, magnetic CTA, rotating word.
+   ======================================================================= */
+.pz14 { background: var(--pz-cream); color: var(--pz-ink); }
+.pz14 ::selection { background: rgba(255, 184, 77, 0.32); }
+.pz14-wrap { max-width: 1160px; margin: 0 auto; padding-inline: 20px; }
+.pz14-section { padding-block: var(--pz-section-y); }
+.pz14-eyebrow {
+  display: inline-block; font-family: var(--pz-font-body);
+  font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--pz-amber-text-sm);
+}
+.pz14-h2 {
+  font-family: var(--pz-font-display); font-weight: 700;
+  font-size: clamp(30px, 4.4vw, 52px); line-height: 1.08;
+  letter-spacing: -0.02em; color: var(--pz-ink); margin: 14px 0 0;
+}
+.pz14-lift { transition: transform var(--pz-dur) var(--pz-ease-out), box-shadow var(--pz-dur) var(--pz-ease-out); }
+.pz14-lift:hover { transform: translateY(-6px); box-shadow: var(--pz-shadow-ink-lg); }
+
+/* ---- glass pill nav ---- */
+.pz14-nav {
+  position: relative; display: flex; align-items: center; justify-content: space-between;
+  max-width: 1140px; margin: 0 auto; padding: 10px 12px 10px 22px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(18px) saturate(150%); -webkit-backdrop-filter: blur(18px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.75); border-radius: var(--pz-radius-pill);
+  box-shadow: 0 14px 34px -18px rgba(36, 29, 82, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+  transition: background var(--pz-dur) var(--pz-ease-out), box-shadow var(--pz-dur) var(--pz-ease-out);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .pz14-nav { background: rgba(255, 248, 237, 0.92); }
+}
+.pz14-nav.scrolled {
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 18px 40px -18px rgba(36, 29, 82, 0.42), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+.pz14-navlinks { display: none; gap: 30px; list-style: none; margin: 0; padding: 0; position: absolute; left: 50%; transform: translateX(-50%); }
+@media (min-width: 1024px) { .pz14-navlinks { display: flex; align-items: center; } }
+.pz14-navlink { position: relative; font-size: 15px; font-weight: 600; color: var(--pz-ink); text-decoration: none; }
+.pz14-navlink::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px;
+  background: var(--pz-purple); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.25s var(--pz-ease-out);
+}
+.pz14-navlink:hover::after, .pz14-navlink:focus-visible::after { transform: scaleX(1); }
+
+/* ---- kinetic CTA (label-slide + magnetic via GSAP x/y; no CSS transform on root) ---- */
+.pz14-cta {
+  display: inline-flex; align-items: center; gap: 10px; cursor: pointer;
+  border: none; text-decoration: none; font-family: var(--pz-font-body); font-weight: 700;
+  border-radius: var(--pz-radius-pill); background: var(--pz-purple); color: #fff;
+  padding: 13px 14px 13px 24px; font-size: 15.5px; will-change: transform;
+  box-shadow: 0 18px 32px -16px rgba(61, 52, 139, 0.7);
+  transition: box-shadow var(--pz-dur) var(--pz-ease-out), background var(--pz-dur-fast) var(--pz-ease-out);
+}
+.pz14-cta:hover { box-shadow: 0 22px 40px -16px rgba(61, 52, 139, 0.8); }
+.pz14-cta--big { padding: 15px 15px 15px 27px; font-size: 16.5px; }
+.pz14-cta--amber { background: var(--pz-amber); color: var(--pz-ink); box-shadow: 0 16px 30px -16px rgba(245, 158, 11, 0.7); }
+.pz14-cta--ghost { background: #fff; color: var(--pz-ink); border: 1px solid var(--pz-line); box-shadow: none; font-weight: 600; padding: 13px 22px 13px 14px; }
+.pz14-cta--onpurple { background: rgba(255, 255, 255, 0.12); color: #fff; border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: none; font-weight: 600; padding: 13px 22px; }
+.pz14-roll { position: relative; display: inline-block; overflow: hidden; line-height: 1.18; }
+.pz14-roll-track { display: block; transition: transform 0.34s var(--pz-ease-out); }
+.pz14-roll-b { position: absolute; left: 0; top: 100%; white-space: nowrap; }
+.pz14-cta:hover .pz14-roll-track, .pz14-cta:focus-visible .pz14-roll-track { transform: translateY(-100%); }
+.pz14-cta-ico { display: inline-flex; align-items: center; justify-content: center; flex: none; border-radius: 50%; transition: transform var(--pz-dur) var(--pz-ease-out); }
+.pz14-cta:hover .pz14-cta-ico { transform: translate(2px, -1px); }
+@media (hover: none) { .pz14-cta:active { transform: scale(0.97); } }
+
+/* ---- hero ---- */
+.pz14-hero {
+  position: relative; overflow: hidden; min-height: calc(100svh - 76px);
+  display: flex; align-items: center; justify-content: center;
+  padding: clamp(36px, 6vh, 76px) 16px clamp(48px, 8vh, 92px);
+  background: linear-gradient(180deg, #fff4e2 0%, #ffe7c5 100%);
+}
+.pz14-hero-inner { position: relative; z-index: 2; max-width: 920px; margin: 0 auto; text-align: center; }
+.pz14-hl {
+  font-family: var(--pz-font-display); font-weight: 700;
+  font-size: clamp(42px, 7.4vw, 84px); line-height: 1.0; letter-spacing: -0.025em;
+  color: var(--pz-ink); margin: 22px 0 0;
+}
+.pz14-hl-mask { display: block; overflow: hidden; padding-bottom: 0.08em; }
+.pz14-hl-line { display: block; transform: translateY(116%); animation: pz14LineUp 0.85s var(--pz-ease-out) forwards; }
+.pz14-hl-line.l2 { animation-delay: 0.1s; }
+@keyframes pz14LineUp { to { transform: translateY(0); } }
+.pz14-rotw-wrap { position: relative; display: inline-block; overflow: hidden; vertical-align: bottom; }
+.pz14-rotw-size { visibility: hidden; }
+.pz14-rotw { position: absolute; left: 0; top: 0; white-space: nowrap; color: var(--pz-amber-ink); font-style: italic; opacity: 0; }
+.pz14-rotw:first-child { opacity: 1; }
+.pz14-rise { animation: pz14Rise 0.7s var(--pz-ease-out) both; }
+@keyframes pz14Rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.pz14-scrollcue { display: inline-flex; align-items: center; gap: 8px; margin-top: clamp(26px, 4vh, 44px); color: #9a8f7c; font-size: 12px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; }
+.pz14-scrollcue svg { animation: pz14Nudge 1.6s ease-in-out infinite; }
+@keyframes pz14Nudge { 0%, 100% { transform: translateY(0); opacity: 0.7; } 50% { transform: translateY(4px); opacity: 1; } }
+
+/* ---- hero aurora (autonomous drift + cursor parallax via --mx/--my) ---- */
+.pz14-bg { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.pz14-bg-move { position: absolute; inset: -8%; transform: translate3d(var(--mx, 0px), var(--my, 0px), 0); will-change: transform; }
+.pz14-blob { position: absolute; border-radius: 50%; filter: blur(48px); }
+.pz14-blob-1 { width: 540px; height: 540px; left: -60px; top: -60px; background: radial-gradient(circle, rgba(124, 107, 224, 0.5), transparent 70%); animation: pz14Float1 21s ease-in-out infinite; }
+.pz14-blob-2 { width: 620px; height: 620px; right: -90px; top: -80px; background: radial-gradient(circle, rgba(255, 184, 77, 0.6), transparent 70%); animation: pz14Float2 25s ease-in-out infinite; }
+.pz14-blob-3 { width: 560px; height: 560px; right: 6%; bottom: -150px; background: radial-gradient(circle, rgba(255, 138, 92, 0.46), transparent 70%); animation: pz14Float3 23s ease-in-out infinite; }
+.pz14-blob-4 { width: 470px; height: 470px; left: -50px; bottom: -100px; background: radial-gradient(circle, rgba(255, 206, 140, 0.52), transparent 70%); animation: pz14Float1 27s ease-in-out infinite reverse; }
+@keyframes pz14Float1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(64px, 44px) scale(1.12); } }
+@keyframes pz14Float2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-54px, 52px) scale(1.1); } }
+@keyframes pz14Float3 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-42px, -52px) scale(1.14); } }
+.pz14-grain { position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 160px 160px; opacity: 0.05; mix-blend-mode: multiply; }
+
+/* ---- avatars ---- */
+.pz14-avatars { display: inline-flex; align-items: center; }
+.pz14-avatars img { width: 40px; height: 40px; border-radius: 50%; border: 2.5px solid #fff8ed; object-fit: cover; margin-left: -12px; box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.25); }
+.pz14-avatars img:first-child { margin-left: 0; }
+
+/* ---- dual living marquee ---- */
+.pz14-marq-band { background: var(--pz-purple); padding: 22px 0; overflow: hidden; border-radius: 44px 44px 0 0; margin-top: -30px; position: relative; z-index: 3; }
+.pz14-marq-mask { -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.pz14-marq { display: flex; width: max-content; animation: pz14Marquee 32s linear infinite; }
+.pz14-marq-rev { animation-direction: reverse; animation-duration: 40s; margin-top: 12px; opacity: 0.5; }
+.pz14-marq-band:hover .pz14-marq { animation-play-state: paused; }
+.pz14-marq-cell { display: inline-flex; align-items: center; gap: 22px; padding: 0 22px; color: #fff; font-weight: 600; font-size: 15px; white-space: nowrap; }
+.pz14-marq-cell i { width: 6px; height: 6px; border-radius: 50%; background: var(--pz-amber); display: inline-block; }
+@keyframes pz14Marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ---- scroll-enlarge video ---- */
+.pz14-sv-track { position: relative; margin-top: -30px; z-index: 4; }
+/* Tall scrub track only when JS+motion are active (pz14-js is added by the
+   no-preference branch) — no-JS / reduced-motion get a normal contained video. */
+@media (min-width: 901px) { html.pz14-js .pz14-sv-track { height: 230vh; } }
+.pz14-sv-sticky { position: sticky; top: 0; min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; border-radius: 44px 44px 0 0; background: linear-gradient(180deg, #fdf1dc 0%, #fff8ed 100%); }
+.pz14-sv-card { position: relative; overflow: hidden; width: min(640px, 90vw); aspect-ratio: 16 / 9; border-radius: 24px; box-shadow: 0 50px 110px -50px rgba(36, 29, 82, 0.55); will-change: transform; }
+.pz14-sv-card video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* ---- reveals (hidden only when JS active so no-JS / reduced-motion shows content) ---- */
+html.pz14-js .pz14-rv { opacity: 0; }
+
+/* ---- stats ---- */
+.pz14-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 24px; max-width: 1000px; margin: 0 auto; align-items: center; }
+.pz14-stat { text-align: center; padding: 8px 12px; }
+.pz14-stat-num { font-family: var(--pz-font-body); font-size: clamp(32px, 4.4vw, 50px); font-weight: 800; letter-spacing: -0.03em; color: var(--pz-purple); line-height: 1; font-variant-numeric: tabular-nums; }
+.pz14-stat-label { font-size: 14px; color: var(--pz-muted); margin-top: 8px; font-weight: 600; }
+
+/* ---- pinned feature set-piece (desktop) / stacked (mobile) ---- */
+.pz14-feat-pinned { display: none; }
+.pz14-feat-stack { display: block; }
+.pz14-pinmode .pz14-feat-pinned { display: block; }
+.pz14-pinmode .pz14-feat-stack { display: none; }
+.pz14-feat-track { position: relative; }
+/* Pinned by GSAP (pin:true) — must NOT be CSS-sticky or the two transforms fight. */
+.pz14-feat-sticky { min-height: 100dvh; display: flex; align-items: center; overflow: hidden; }
+.pz14-feat-grid { max-width: 1080px; margin: 0 auto; width: 100%; padding: 0 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.pz14-frame { position: absolute; inset: 0; }
+.pz14-phone { width: 240px; height: 484px; border-radius: 36px; background: #fff; border: 1px solid var(--pz-line); box-shadow: 0 50px 90px -45px rgba(36, 29, 82, 0.55); padding: 14px; }
+.pz14-phone-screen { height: 100%; border-radius: 24px; display: flex; flex-direction: column; justify-content: flex-end; padding: 16px; }
+
+/* ---- testimonials rail (auto-drift + drag + native swipe) ---- */
+.pz14-tcar { overflow-x: auto; overflow-y: hidden; padding: 8px 16px 18px; scroll-snap-type: x proximity; cursor: grab; -webkit-overflow-scrolling: touch; }
+.pz14-tcar.dragging { cursor: grabbing; scroll-snap-type: none; }
+.pz14-tcar::-webkit-scrollbar { display: none; }
+.pz14-tcar { scrollbar-width: none; -ms-overflow-style: none; }
+.pz14-ttrack { display: flex; gap: 16px; width: max-content; }
+.pz14-tcard { width: 320px; flex: none; scroll-snap-align: center; background: var(--pz-cream); border: 1px solid var(--pz-line); border-radius: var(--pz-radius-tile); padding: 24px; display: flex; flex-direction: column; }
+.pz14-tcard img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+
+/* ---- free band ---- */
+.pz14-band { position: relative; overflow: hidden; max-width: 1080px; margin: 0 auto; border-radius: calc(var(--pz-radius-tile) + 10px); padding: clamp(36px, 5vw, 64px); text-align: center; background: linear-gradient(135deg, var(--pz-purple), var(--pz-purple-deep)); box-shadow: 0 40px 80px -40px rgba(36, 29, 82, 0.6); }
+
+/* ---- FAQ ---- */
+.pz14-faq-item { background: var(--pz-cream); border: 1px solid var(--pz-line); border-radius: 18px; overflow: hidden; }
+.pz14-faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: transparent; border: none; cursor: pointer; padding: 18px 20px; text-align: left; font-size: 16px; font-weight: 700; color: var(--pz-ink); font-family: var(--pz-font-body); }
+.pz14-faq-q svg { flex: none; transition: transform var(--pz-dur) var(--pz-ease-out); }
+.pz14-faq-q[aria-expanded="true"] svg { transform: rotate(180deg); }
+.pz14-acc { display: grid; grid-template-rows: 0fr; transition: grid-template-rows var(--pz-dur-slow) var(--pz-ease-out); }
+.pz14-acc.open { grid-template-rows: 1fr; }
+.pz14-acc > div { overflow: hidden; }
+
+/* ---- footer ---- */
+.pz14-footer { background: var(--pz-purple-deep); color: #fff; padding: clamp(48px, 6vw, 80px) 16px 40px; border-radius: 48px 48px 0 0; margin-top: -28px; position: relative; z-index: 2; }
+
+/* ---- focus-visible ring (a11y baseline) ---- */
+.pz14 a:focus-visible, .pz14 button:focus-visible { outline: 2px solid var(--pz-purple); outline-offset: 3px; border-radius: 6px; }
+
+/* ---- responsive ---- */
+@media (max-width: 900px) {
+  .pz14-feat-grid { grid-template-columns: 1fr; }
+}
+
+/* ---- reduced motion: freeze loops, reveal everything, no parallax ---- */
+@media (prefers-reduced-motion: reduce) {
+  .pz14-hl-line { transform: none; animation: none; }
+  .pz14-rise { animation: none; }
+  .pz14-blob { animation: none; }
+  .pz14-bg-move { transform: none !important; }
+  .pz14-marq { animation: none; transform: none; }
+  .pz14-scrollcue svg { animation: none; }
+  .pz14-roll-track { transition: none; }
+  html.pz14-js .pz14-rv { opacity: 1; }
+}

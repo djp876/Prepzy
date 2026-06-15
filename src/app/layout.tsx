@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Poppins, Fraunces } from "next/font/google";
 import "../prepzy-kit/styles/tokens.css";
 import "./globals.css";
 
@@ -8,6 +8,17 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700", "800", "900"],
   style: ["normal", "italic"],
   variable: "--font-poppins",
+  display: "swap",
+});
+
+// Display serif for the "Warm Editorial" headline direction (v14 A/B).
+// Tokenised via --font-fraunces so it can be swapped back to Poppins-only
+// without touching components. font-display: swap keeps mobile LCP safe.
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "900"],
+  style: ["normal", "italic"],
+  variable: "--font-fraunces",
   display: "swap",
 });
 
@@ -21,7 +32,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={poppins.variable}>
+    <html lang="en" className={`${poppins.variable} ${fraunces.variable}`}>
       <body suppressHydrationWarning>{children}</body>
     </html>
   );

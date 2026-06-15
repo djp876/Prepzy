@@ -57,4 +57,34 @@
   --pz-dur-slow: 420ms;
   --pz-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --pz-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* === Design-system additions (Warm Editorial × Kinetic, June 2026) === */
+  /* Type families by role. Fraunces = display, Poppins = body/UI. */
+  --pz-font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --pz-font-body: var(--font-poppins), "Poppins", system-ui, sans-serif;
+
+  /* Contrast corrections (verified WCAG): amber text < 24px must be the darker token */
+  --pz-amber-text-sm: #b45309; /* 4.76:1 on cream — AA body */
+  --pz-lavender-1: #e7e3fb; /* promoted from a magic hex */
+
+  /* Extended spacing + section rhythm */
+  --pz-space-7: 40px;
+  --pz-space-10: 64px;
+  --pz-space-12: 80px;
+  --pz-space-16: 96px;
+  --pz-section-y: clamp(64px, 8vw, 120px);
+
+  /* Soft ink-tinted elevation (warm-editorial) — scoped to v14, leaves --pz-shadow-* untouched */
+  --pz-shadow-ink-sm: 0 2px 8px -2px rgba(26, 26, 46, 0.1);
+  --pz-shadow-ink-md: 0 12px 28px -14px rgba(26, 26, 46, 0.22);
+  --pz-shadow-ink-lg: 0 30px 60px -28px rgba(26, 26, 46, 0.26);
+
+  /* z-index scale */
+  --pz-z-base: 0;
+  --pz-z-raised: 10;
+  --pz-z-sticky: 20;
+  --pz-z-header: 30;
+  --pz-z-overlay: 40;
+  --pz-z-modal: 50;
+  --pz-z-toast: 60;
 }
